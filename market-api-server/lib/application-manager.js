@@ -1,7 +1,4 @@
- 
-    import Web3Helper from './web3-helper.js'
- 
-    import FileHelper from './file-helper.js'
+  
 
     import web3utils from 'web3-utils'
  
@@ -42,6 +39,9 @@
             }
 
             static async findApplicationById(appId, mongoInterface){
+
+                appId = ApplicationManager.sanitizeString(appId) 
+
                 return await mongoInterface.apiApplicationModel.find( {applicationId: appId } )
  
             }
@@ -117,5 +117,12 @@
             
                 return true 
             }
-        
+            
+            static sanitizeString(s){
+                if(!s) return s
+    
+                return s.replace('$','')
+            }
+         
+            
     }

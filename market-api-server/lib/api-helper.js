@@ -331,7 +331,10 @@
             
             let allTiles = []
 
-           if(  traitName && traitValue){
+           if( traitName && traitValue){
+
+            traitName = APIHelper.sanitizeString(traitName)
+            traitValue = APIHelper.sanitizeString(traitValue)
 
             let traitsRecord = await APIHelper.findAllERC721ByTraitValue(collectionName,traitName,traitValue,mongoInterface)
 

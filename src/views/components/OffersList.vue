@@ -95,19 +95,26 @@ export default {
 
             console.log(' fetchBuyOffers response',response)
 
-          let ordersForNFT = response.output.slice(0,5000)
+            let ordersForNFT = response.output.slice(0,5000)
 
           //let ordersFromOwner = ordersForNFT.filter(x => x.orderCreator.toLowerCase() == this.tokenOwnerAddress.toLowerCase()  )
 
-          let buyOrders = ordersForNFT.filter(x => x.isSellOrder == false  ) 
+            let buyOrders = ordersForNFT.filter(x => x.isSellOrder == false  ) 
 
-           let currentBlockNumber = await this.web3Plug.getBlockNumber()
-           let unexpiredBuyOrders = buyOrders.filter(x => x.expires > currentBlockNumber)
+            try{ 
+             let currentBlockNumber = await this.web3Plug.getBlockNumber()
+             let unexpiredBuyOrders = buyOrders.filter(x => x.expires > currentBlockNumber)
+             this.validBuyOffers = unexpiredBuyOrders.sort( (a,b) => {return b.currencyTokenAmount - a.currencyTokenAmount}  )
 
-            this.validBuyOffers = unexpiredBuyOrders.sort( (a,b) => {return b.currencyTokenAmount - a.currencyTokenAmount}  )
+            
+            }catch(e){
+              this.validBuyOffers = buyOrders.sort( (a,b) => {return b.currencyTokenAmount - a.currencyTokenAmount}  )
+                console.error('could not fetch block number')
+            }
+
 
             console.log('validBuyOffers',this.validBuyOffers)
-        
+ 
  
       },
 

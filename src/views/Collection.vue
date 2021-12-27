@@ -108,6 +108,18 @@ export default {
 
   created(){
 
+    let queryCollectionName =  this.$route.params.collectionName
+    if(queryCollectionName){
+       if(queryCollectionName.toLowerCase() == 'cryptoadz'){
+         this.collectionName = 'Cryptoadz'
+      }
+
+      if(queryCollectionName.toLowerCase() == 'cryptoflyz'){
+         this.collectionName = 'Cryptoflyz'
+      }
+     
+    }
+
 
     let queryFilterTraitName =  this.$route.query.traitName
     let queryFilterTraitValue  =  this.$route.query.traitValue

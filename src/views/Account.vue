@@ -241,7 +241,7 @@ export default {
             //let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
  
    
-            let filterNFTcontracts  = ['Cryptoadz'] 
+            let filterNFTcontracts  = ['Cryptoadz','Cryptoflyz'] 
 
 
              console.log('filterNFTcontracts',filterNFTcontracts)

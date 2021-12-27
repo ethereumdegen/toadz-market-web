@@ -62,8 +62,16 @@ export default {
 
       getImageURL(){
 
-        return `/images/toadz/${this.nftTokenId}.jpg` 
+        let folderName = this.getImageFolderNameFromCollectionName(this.collectionName)
 
+        return `/images/${folderName}/${this.nftTokenId}.jpg` 
+
+      },
+
+      getImageFolderNameFromCollectionName(cName){
+        if( cName && cName.toLowerCase() == 'cryptoflyz' ) return 'flyz'
+
+        return 'toadz'
       },
 
       getOwnerName(){

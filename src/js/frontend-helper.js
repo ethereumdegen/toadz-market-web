@@ -16,7 +16,7 @@ export default class FrontendHelper {
       }
     }
 
-    return contractName
+    return null
   }
 
   

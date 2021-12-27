@@ -126,9 +126,9 @@
 
     
 
-     <div class="autospacing container flex margin-center">
+     <div class="autospacing container  grid md:grid-cols-2 margin-center">
         
-       <div class="w-column w-1/2">
+       <div class=" ">
 
           
             <OffersList 
@@ -144,7 +144,7 @@
 
        </div>
 
-         <div class="w-column w-1/2 m-4 p-4 bg-gray-200 rounded" v-if="interactionMode=='makeSellOrder' || interactionMode=='lowerPrice' || interactionMode=='makeBuyOrder'">
+         <div class="  m-4 p-4 bg-gray-200 rounded" v-if="interactionMode=='makeSellOrder' || interactionMode=='lowerPrice' || interactionMode=='makeBuyOrder'">
 
           <div class="py-2 " v-if="interactionMode=='makeSellOrder' || interactionMode=='lowerPrice'">
 
@@ -277,9 +277,7 @@ export default {
 
         this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, contractData  )
           console.log('found nftContractAddress',this.nftContractAddress)
-
-
-        
+ 
        
      
         await this.fetchTokenData() 
@@ -311,11 +309,21 @@ export default {
         return `/collection/${this.nftContractAddress}/${this.nftTokenId}` 
       },
 
-      getImageURL(){
+     
+        getImageURL(){
 
-        return `/images/toadz/${this.nftTokenId}.jpg` 
+        let folderName = this.getImageFolderNameFromCollectionName(this.collectionName)
+
+        return `/images/${folderName}/${this.nftTokenId}.jpg` 
 
       },
+
+      getImageFolderNameFromCollectionName(cName){
+        if( cName && cName.toLowerCase() == 'cryptoflyz' ) return 'flyz'
+
+        return 'toadz'
+      },
+
 
       getAssetName(){
         //make this come from a giant config file that uses contract address and token id to look up 
@@ -334,7 +342,7 @@ export default {
 
       getProjectURL(traitType,traitValue){  
 
-        const collectionName = 'cryptoadz'
+        const collectionName = this.collectionName
 
         if(traitType && traitValue){
           return '/collection/'+collectionName+'?'+`traitName=${traitType}&traitValue=${traitValue}`

@@ -3,7 +3,7 @@
     <div class="container margin-center">
 
       <div class=" grid grid-flow-col ">
-        <div class=" grid grid-flow-row ">
+        <div class=" grid grid-flow-row text-center">
           
           <h3 class="heading-3 footer font-fun">Documentation</h3>
  
@@ -19,7 +19,7 @@
 
           </div>
 
-        <div class=" grid grid-flow-row ">
+        <div class=" grid grid-flow-row text-center">
 
           <h3 class="heading-3 footer font-fun ">Community &amp; Social</h3>
 

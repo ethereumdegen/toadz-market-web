@@ -144,6 +144,10 @@ export default class NFTTileManager  {
       
     let collectionName = AppHelper.contractAddressToCollectionName(erc721Balance.contractAddress)
 
+    if(!collectionName){ 
+      return
+    }
+
     let ownerAddress = AppHelper.toChecksumAddress(erc721Balance.accountAddress)
     let ownedTokenIds = erc721Balance.tokenIds
 
@@ -166,6 +170,10 @@ export default class NFTTileManager  {
       let collectionName = AppHelper.contractAddressToCollectionName(marketOrder.nftContractAddress)
       let orderCreator = AppHelper.toChecksumAddress(marketOrder.orderCreator)
       let currentBlockNumber = this.blockNumber 
+
+      if(!collectionName){ 
+        return
+      }
 
       if(!currentBlockNumber){
         console.log('WARN: no block number to update market order status')
@@ -205,6 +213,10 @@ export default class NFTTileManager  {
      // let orderCreator = AppHelper.toChecksumAddress(marketOrder.orderCreator)
       let orderBuyoutPriceWei = marketOrder.currencyTokenAmount
       let orderCollectionName = AppHelper.contractAddressToCollectionName(marketOrder.nftContractAddress)
+
+      if(!orderCollectionName){ 
+        return
+      }
 
       let matchingNFTTile = await this.mongoInterface.cachedNFTTileModel.findOne({collectionName: orderCollectionName , tokenId: marketOrder.nftTokenId })
 

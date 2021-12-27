@@ -32,7 +32,9 @@
                 } 
             } 
 
-            return 'Cryptoadz'
+            console.error('ERROR: could not resolve contract name ',contractAddress )
+
+            return  null
         }  
 
         static getNetworkName(){

@@ -175,7 +175,7 @@ export default class NFTTileManager  {
       
 
       //if the order would revert in solidity we mark is as not valid 
-      if(matchingNFTTile.ownerPublicAddress && orderCreator != AppHelper.toChecksumAddress(matchingNFTTile.ownerPublicAddress)   ){
+      if(marketOrder.isSellOrder && matchingNFTTile.ownerPublicAddress && orderCreator != AppHelper.toChecksumAddress(matchingNFTTile.ownerPublicAddress)   ){
         newMarketOrderStatus = 'ownerAddressMismatched'
       }
 

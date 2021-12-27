@@ -73,6 +73,7 @@
 
           </div>
 
+        <div class="my-32">
            <div class="py-2" v-if="ownedByLocalUser()">
 
                 <div v-if="bestSellOrder " class='my-2'>
@@ -102,18 +103,14 @@
             <div v-if="bestSellOrder && getBuyoutPrice()" class='my-2'>
                <div class="p-2 border-2 border-black inline-block cursor-pointer rounded bg-blue-500 text-white hover:bg-blue-400  select-none"  @click="buyoutNow"> Buyout For {{ getBuyoutPrice() }} ETH </div>
             </div>
-
-
-
+ 
 
             
                 <div class="p-2 my-2 border-2 border-black inline-block cursor-pointer rounded hover:bg-purple-200  select-none"  @click="interactionMode='makeBuyOrder'"> Bid For This Item </div>
-  
-            
-
+   
            
           </div>
-
+       </div>
 
        </div>
         </div>

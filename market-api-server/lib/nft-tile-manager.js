@@ -202,7 +202,7 @@ export default class NFTTileManager  {
       
       //make sure currency token address is weth ?? --
 
-      let orderCreator = AppHelper.toChecksumAddress(marketOrder.orderCreator)
+     // let orderCreator = AppHelper.toChecksumAddress(marketOrder.orderCreator)
       let orderBuyoutPriceWei = marketOrder.currencyTokenAmount
       let orderCollectionName = AppHelper.contractAddressToCollectionName(marketOrder.nftContractAddress)
 
@@ -217,17 +217,17 @@ export default class NFTTileManager  {
        
 
       }else{
-        let buyoutPriceWasFromStaleOrder = false 
+       // let buyoutPriceWasFromStaleOrder = false 
         if(matchingNFTTile.buyoutPriceFromOrderId && AppHelper.mongoIdToNumber(marketOrder._id) == matchingNFTTile.buyoutPriceFromOrderId){
         
-          if(!orderThatEstablishedBuyoutPrice){
-            buyoutPriceWasFromStaleOrder=true
-          } 
+          //if(!orderThatEstablishedBuyoutPrice){
+
+          //buyout price was from stale order so we clear the buyout price 
+            await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {lowestBuyoutPriceWei: undefined, buyoutPriceFromOrderId:undefined})
+         // } 
         }
 
-        if(buyoutPriceWasFromStaleOrder){
-          await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {lowestBuyoutPriceWei: undefined, buyoutPriceFromOrderId:undefined})
-        }
+      
 
       }
 

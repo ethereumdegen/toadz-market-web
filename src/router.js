@@ -14,18 +14,8 @@ import ProjectsIndex from './views/ProjectsIndex.vue'
 import Collection from './views/Collection.vue'
 import NftShow from './views/nft/Show.vue'
 
-/*
-import NewBid from './views/NewBid.vue'
-import Sell from './views/Sell.vue'
-import Search from './views/Search.vue'
-import Type from './views/Type.vue'
-import nftToken from './views/nftToken.vue'
-import Bid from './views/Bid.vue'
-import StartSelling from './views/StartSelling.vue'
-
-import Dashboard from './views/Dashboard.vue'*/
-
-
+import RecentActivity from './views/RecentActivity.vue'
+ 
 import NotFound from './views/NotFound.vue'
 
 Vue.use(Router)
@@ -41,6 +31,13 @@ export default new Router({
       component: Home
     },
 
+
+    {
+      path: '/activity/',
+      name: 'recentActivity',
+      component: RecentActivity
+    },
+
     {
       path: '/account/:address',
       name: 'account',
@@ -52,6 +49,8 @@ export default new Router({
       name: 'projectsIndex',
       component: ProjectsIndex
     },
+
+
 
     {
       path: '/project/:projectId',

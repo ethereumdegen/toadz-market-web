@@ -99,6 +99,10 @@ const MarketOrdersSchema = new Schema({
   },
   status:{
     type: String
+  },
+  
+  createdAt:{
+    type: Number
   }
  
 })

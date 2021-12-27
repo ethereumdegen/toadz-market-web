@@ -34,11 +34,9 @@
             </div>
 
           <div class="w-row text-center"> 
-
-
+ 
             
                <router-link to="/collection/cryptoadz" class='text-gray-200 text-xl inline text-align:center' style="margin:0 auto;"> Shop All Toadz </router-link>
-               
                 
             
            </div>
@@ -63,6 +61,13 @@
                   <img src="@/assets/images/swampz.png" width="300"  /> 
               
                   <FrontPageMedia />
+
+                   <div> 
+                    <div>
+                    <router-link to="/activity" class='text-orange-600 text-xl block'> View Recent Activity</router-link>
+                    </div>
+                  </div> 
+
               </div>
  
          </div>
@@ -101,11 +106,9 @@
          </div>
          <div class="column-2 w-col w-col-6  ">
            
-              <FrontPageMedia />
+              <FrontPageMedia /> 
 
              
-
-
 
          </div>
        </div>

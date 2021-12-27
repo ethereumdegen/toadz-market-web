@@ -11,7 +11,7 @@ import ExpressServer from './lib/express-server.js'
 
 import PopulateTraitsTask from './tasks/populateTraitsDB.js'
 import PopulateCachedNFTTilesTask from './tasks/populateCachedNFTTiles.js'
-
+import GenerateContractDataLookupTask from './tasks/generateContractDataLookup.js'
 //import PacketReceiver from './lib/packet-receiver.js'
 //import PacketCustodian from './lib/packet-custodian.js'
 
@@ -36,6 +36,7 @@ let dataghostConfig = dataghostConfigFile[envmode]
     let mongoInterface = new MongoInterface() 
     await mongoInterface.init(  serverConfig.dbName )
 
+    await GenerateContractDataLookupTask.runTask( )
  
     await PopulateTraitsTask.runTask({collectionName:'Cryptoadz'},mongoInterface)
     await PopulateCachedNFTTilesTask.runTask({collectionName:'Cryptoadz'},mongoInterface)

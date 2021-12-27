@@ -19,6 +19,16 @@
         static async handleApiRequest(request, appId, vibegraphInterface, mongoInterface){
            
             let inputData = request.body 
+
+
+            if(inputData.requestType == 'recent_activity'){
+ 
+                let inputParameters = inputData.input
+   
+                let results = await APIHelper.findRecentActivity(inputParameters.filterCollections, mongoInterface)
+ 
+                return {success:true, input: inputParameters, output: results  }
+            } 
             
 
             //save a new buy or sell order to the server 
@@ -222,7 +232,9 @@
                 currencyTokenAmount:  (inputParameters.currencyTokenAmount).toString(),
                 nonce: inputParameters.nonce.toString(),
                 expires: parseInt(inputParameters.expires),
-                signature: inputParameters.signature.toString()
+                signature: inputParameters.signature.toString(),
+                
+                createdAt: Date.now()
             } 
 
             //check the signature for validity here 
@@ -327,6 +339,19 @@
         }
 
 
+
+        static async findRecentActivity(filterCollections, mongoInterface){
+            let filterContractAddresses = filterCollections.map(name =>  AppHelper.contractCollectionNameToContractAddress(name))
+            filterContractAddresses = filterContractAddresses.map(address => AppHelper.toChecksumAddress(address))
+
+            let ONE_DAY =24*60*60*1000
+            let RECENT_TIME = Date.now() - ONE_DAY 
+
+            let allOrders = await mongoInterface.marketOrdersModel.find({nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })
+
+            return {recentOrders: allOrders}
+        }
+
         static async findNFTTileByTokenId(collectionName,tokenId,mongoInterface){
             let tile = await mongoInterface.cachedNFTTileModel.findOne({collectionName: collectionName, tokenId: tokenId })
 
@@ -363,8 +388,7 @@
            
             //sort the tiles by buyout price, whatever 
 
-           // allTiles.push({collectionName:"Cryptoadz",tokenId:22,lowestBuyoutPriceWei: 10000})
-
+           
             const nftTileBuyoutSort = (a,b)=> {
 
                 if(a.lowestBuyoutPriceWei && !b.lowestBuyoutPriceWei){

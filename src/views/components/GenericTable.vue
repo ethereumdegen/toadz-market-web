@@ -1,13 +1,13 @@
 <template>
   <div class=" ">
-     <table class="table-auto w-full">
-          <thead>
+     <table class="table-auto w-full text-black" v-if="rowsArray">
+          <thead class="font-boring" v-if="rowsArray.length>0">
             <tr>
               <th style="text-align:left" v-for="(label, index) in labelsArray">{{label}}</th>
                
             </tr>
           </thead>
-          <tbody v-cloak>
+          <tbody v-cloak class="font-boring">
             <tr v-for="row of rowsArray" class="hover:bg-teal-200 cursor-pointer" @click="clickedRow(row)">
                
               <td v-for="(label, index) in labelsArray" >{{Object.values(row)[index]}}</td>
@@ -17,7 +17,7 @@
           </tbody>
         </table>
 
-        <div v-if="!rowsArray || rowsArray.length == 0" v-cloak>
+        <div v-if="!rowsArray || rowsArray.length == 0" v-cloak  >
           No records found.
         </div>
   </div>

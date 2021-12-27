@@ -17,13 +17,33 @@
             return web3utils.toChecksumAddress(address)
         }
 
-         //fix me !! convert nftContractAddress
+        static contractCollectionNameToContractAddress(collectionName){
+
+            let networkName = AppHelper.getNetworkName() 
+
+           let contractDataForNetwork = contractData[networkName].contracts
+
+           for(let [contractName,data] of Object.entries(contractDataForNetwork)){
+                 
+               if( collectionName.toLowerCase() == data.name.toLowerCase()   ){
+                   return data.address
+               } 
+           } 
+
+           console.error('ERROR: could not resolve contract address ',collectionName )
+
+           return  null
+       }  
+
+         
         static contractAddressToCollectionName(contractAddress){
 
              let networkName = AppHelper.getNetworkName() 
+ 
 
             let contractDataForNetwork = contractData[networkName].contracts
 
+             
             for(let [contractName,data] of Object.entries(contractDataForNetwork)){
                 let address = data.address
 

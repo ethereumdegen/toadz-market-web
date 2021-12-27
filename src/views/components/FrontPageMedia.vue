@@ -2,7 +2,7 @@
 
 
 
-<div class="pt-8 relative pb-2 mb-12" style="min-height:300px">
+<div class="pt-8 relative pb-2 mb-12" style="min-height:200px">
               
             
             

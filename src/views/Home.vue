@@ -39,7 +39,15 @@
             
                <router-link to="/collection/cryptoadz" class='text-gray-200 text-xl inline text-align:center' style="margin:0 auto;"> Shop All Toadz </router-link>
                
+                
+            
+           </div>
 
+            <div class="w-row text-center mt-16"> 
+
+ 
+              <router-link to="/collection/cryptoflyz" class='text-gray-200 text-xl inline text-align:center ' style="margin:0 auto;"> Shop Cryptoflyz </router-link>
+               
             
            </div>
 

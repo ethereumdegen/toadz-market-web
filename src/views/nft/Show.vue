@@ -60,7 +60,7 @@
 
           <div class="py-2">
 
-            <div class="text-lg"> {{getCollectionName() }} </div>
+            <div class="text-lg"> {{getAssetName() }} </div>
 
             <a class="text-sm font-bold" v-bind:href="getProjectURL()"> {{getCollectionName() }} </a>
 
@@ -318,7 +318,7 @@ export default {
 
       getAssetName(){
         //make this come from a giant config file that uses contract address and token id to look up 
-        let typeName = AssetDataHelper.getProjectNameForAsset(this.nftContractAddress, this.nftTokenId)
+        let typeName = this.getCollectionName()
         let tokenId = this.nftTokenId
 
         return typeName + ' ' + '#' + tokenId

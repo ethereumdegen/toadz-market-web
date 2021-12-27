@@ -316,11 +316,11 @@
             console.log('find ', collectionName, traitName , traitValue)
 
             if(!traitName || !traitValue){
-                return await mongoInterface.traitsModel.findOne({collectionName: collectionName })
+                return await mongoInterface.traitsModel.find({collectionName: collectionName })
             }
             
             
-            return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitType: traitName, value: traitValue })
+            return await mongoInterface.traitsModel.find({collectionName: collectionName, traitType: traitName, value: traitValue })
              
              
         }

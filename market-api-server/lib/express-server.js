@@ -89,12 +89,12 @@ export default class ExpressServer  {
         }
 
          
-        console.log('got api request', req.params , req.body    )
+       // console.log('got api request', req.params , req.body    )
 
         //this needs to log activity so limits can be checked by validateAppId
         let response = await APIHelper.handleApiRequest( req , appId,  this.vibegraphInterface , this.mongoInterface )
 
-        console.log('sending reply:', response   )
+        //console.log('sending reply:', response   )
 
         res.send(response)
       })

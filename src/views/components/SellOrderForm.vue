@@ -56,7 +56,7 @@
 
           </div>
 
-
+          <div v-if="connectedToWeb3()">
            <div v-if="!submittedSellOrderInputs || interactionMode=='lowerPrice'">
 
               <div class="my-8 " v-if="formInputs.currencyAmountFormatted>0">
@@ -68,6 +68,16 @@
 
 
           </div>
+          </div>
+
+          <div class="my-8 text-white" v-if="!connectedToWeb3()">
+
+                 <div   class="p-2 px-8 border-2 border-black inline cursor-pointer bg-blue-400 rounded hover:bg-blue-200" @click="connectToWeb3"> Connect to Web3 </div>
+                   
+             </div>
+
+
+
 
             
 
@@ -257,6 +267,13 @@ export default {
          
 
 
+        },
+          connectedToWeb3(){
+          return this.web3Plug.connectedToWeb3()
+        },
+
+        connectToWeb3(){
+          this.web3Plug.connectWeb3()
         }
 
   }

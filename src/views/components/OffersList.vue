@@ -170,7 +170,13 @@ export default {
           let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
 
           let storeContractAddress = contractData['blockstore'].address
-  
+
+          if(!this.nftContractAddress || !this.web3Plug.getActiveAccountAddress()){
+            console.error('invalid network connection')
+            return 
+          }else(
+            console.log('addy is ', this.nftContractAddress)
+          )
 
           let response = await this.web3Plug.getNFTAllowance(  this.nftContractAddress, storeContractAddress, this.web3Plug.getActiveAccountAddress() )
 
@@ -200,6 +206,16 @@ export default {
 
 
         },
+
+        
+        connectedToWeb3(){
+          return this.web3Plug.connectedToWeb3()
+        },
+
+        connectToWeb3(){
+          this.web3Plug.connectWeb3()
+        }
+
   }
 }
 </script>

@@ -67,7 +67,7 @@
                   </div>
 
 
-                  <div class="my-8 text-white" v-if="!insufficientBalance">
+                  <div class="my-8 text-white" v-if="!insufficientBalance && connectedToWeb3()">
 
                     <div v-if="needToApproveMore" class="p-2 px-8 border-2 border-black inline cursor-pointer bg-blue-400 rounded hover:bg-blue-200" @click="approveAllWeth"> Approve Weth </div>
                     <div v-if="!needToApproveMore && getCurrencyAmountRaw()>0 && hasCalculatedApproval" class="p-2 px-8 border-2 border-black inline cursor-pointer bg-green-400 rounded hover:bg-green-200" @click="createBuyOrder"> Place Bid </div>
@@ -75,6 +75,13 @@
 
               
             </div>
+
+
+            <div class="my-8 text-white" v-if="!connectedToWeb3()">
+
+                 <div   class="p-2 px-8 border-2 border-black inline cursor-pointer bg-blue-400 rounded hover:bg-blue-200" @click="connectToWeb3"> Connect to Web3 </div>
+                   
+             </div>
 
           
 
@@ -159,6 +166,13 @@ export default {
 
          //check to see if weth is approved 
 
+           if(!this.nftContractAddress || !this.web3Plug.getActiveAccountAddress()){
+            console.error('invalid network connection')
+            return 
+          }else(
+            console.log('addy is ', this.nftContractAddress)
+          )
+
           let amountRaw = this.web3Plug.formattedAmountToRaw(this.formInputs.currencyAmountFormatted,18)
          
           this.currentWethBalance = await this.getWethBalance()
@@ -192,6 +206,15 @@ export default {
           } 
 
 
+        },
+
+
+        connectedToWeb3(){
+          return this.web3Plug.connectedToWeb3()
+        },
+
+        connectToWeb3(){
+          this.web3Plug.connectWeb3()
         },
 
 

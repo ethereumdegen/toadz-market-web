@@ -352,6 +352,11 @@ export default {
       },
 
       async buyoutNow(){
+
+        if(!this.web3Plug.connectedToWeb3()){
+          this.web3Plug.connectWeb3()
+          return 
+        }
          
 
         let orderToFulfill = this.bestSellOrder
@@ -449,6 +454,13 @@ export default {
  
 
       async fetchOrdersForToken(){
+
+        if(!this.nftContractAddress){
+          console.error('invalid network connection')
+          return 
+        }else(
+          console.log('addy is ', this.nftContractAddress)
+        )
 
          await this.$refs.OffersList.checkForApproval() 
 

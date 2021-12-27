@@ -35,7 +35,10 @@ import StarflaskApiHelper from '../../js/starflask-api-helper.js'
 import NftTile from './NftTile.vue';
 import PaginationBar from './PaginationBar.vue';
 
-const FrontendConfig = require('../../config/FrontendConfig.json')
+
+const envName = process.env.NODE_ENV
+
+const FrontendConfig = require('../config/FrontendConfig.json')[envName]
 
 export default {
   name: 'TiledTokenBrowser',

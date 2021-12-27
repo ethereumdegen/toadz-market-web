@@ -90,7 +90,10 @@ import StarflaskAPIHelper from '../../js/starflask-api-helper'
 const web3utils = require('web3').utils
 
 
-const FrontendConfig = require('../../config/FrontendConfig.json')
+
+const envName = process.env.NODE_ENV
+
+const FrontendConfig = require('../config/FrontendConfig.json')[envName]
 
 const offchainOrderPacketConfig = require('../../js/eip712-config.json')
 

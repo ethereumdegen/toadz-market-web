@@ -138,7 +138,10 @@ import GenericTable from './components/GenericTable.vue';
 //import BuyTheFloorHelper from '../js/buythefloor-helper.js'
 
 
-const FrontendConfig = require('../config/FrontendConfig.json')
+const envName = process.env.NODE_ENV
+
+const FrontendConfig = require('../config/FrontendConfig.json')[envName]
+
  
 
 import AssetDataHelper from '../js/asset-data-helper'

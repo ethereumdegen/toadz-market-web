@@ -49,7 +49,10 @@ import StarflaskAPIHelper from '../../js/starflask-api-helper'
 
 const StoreContractABI = require( '../../contracts/BlockStoreABI.json'  )
 
-const FrontendConfig = require('../../config/FrontendConfig.json')
+
+const envName = process.env.NODE_ENV
+
+const FrontendConfig = require('../config/FrontendConfig.json')[envName]
 
 
 const web3utils = require('web3').utils

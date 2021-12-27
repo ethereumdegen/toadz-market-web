@@ -89,24 +89,25 @@ export default {
          
 
          let inputQuery = Object.assign( {collectionName: this.collectionName }, this.currentFilter   )
+
+
+          
+
          let result = await StarflaskApiHelper.resolveStarflaskQuery(uri,{"requestType": "NFTTiles_by_trait_value", "input": inputQuery})
            let output = result.output 
 
+         
  
            if(output){
                
               this.resultsDataArray = output
-              console.log('resultsDataArray', this.resultsDataArray)
-
+             
               this.currentPage = 1
 
                 this.maxPages = Math.ceil( this.resultsDataArray.length / this.itemsPerPage ) + 1
                 this.activeNFTDataArray = this.filterTokensForCurrentPage(this.resultsDataArray)
 
-
-              console.log('activeNFTDataArray', this.activeNFTDataArray)
-
-              console.log('max pages', this.maxPages)
+ 
            }
         
       },

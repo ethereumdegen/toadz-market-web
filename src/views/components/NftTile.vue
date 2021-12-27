@@ -40,7 +40,7 @@ export default {
   },
   created(){
 
-    console.log('nft data',this.nftData)
+   
 
   },
   methods: {

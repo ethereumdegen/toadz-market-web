@@ -312,15 +312,10 @@
             collectionName = APIHelper.sanitizeString(collectionName)
             traitName = APIHelper.sanitizeString(traitName)
             traitValue = APIHelper.sanitizeString(traitValue)
-
+            
+            
             console.log('find ', collectionName, traitName , traitValue)
-
-            if(!traitName || !traitValue){
-                return await mongoInterface.traitsModel.find({collectionName: collectionName })
-            }
-            
-            
-            return await mongoInterface.traitsModel.find({collectionName: collectionName, traitType: traitName, value: traitValue })
+            return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitType: traitName, value: traitValue })
              
              
         }
@@ -333,6 +328,11 @@
         }
 
         static async findAllNFTTilesByTraitValue(collectionName,traitName,traitValue,mongoInterface){
+            
+            let allTiles = []
+
+           if(  traitName && traitValue){
+
             let traitsRecord = await APIHelper.findAllERC721ByTraitValue(collectionName,traitName,traitValue,mongoInterface)
 
             let tokenIdArray = traitsRecord.tokenIdArray
@@ -342,11 +342,16 @@
             for(let entry of tokenIdArray){
                 filterArray.push(parseInt(entry))
             }
- 
- 
+  
 
-            let allTiles = await mongoInterface.cachedNFTTileModel.find({collectionName: collectionName, tokenId: {$in:filterArray} })
+             allTiles = await mongoInterface.cachedNFTTileModel.find({collectionName: collectionName, tokenId: {$in:filterArray} })
+         
+            }else{
+           
+            allTiles = await mongoInterface.cachedNFTTileModel.find({collectionName: collectionName  })
 
+           }
+           
             //sort the tiles by buyout price, whatever 
 
            // allTiles.push({collectionName:"Cryptoadz",tokenId:22,lowestBuyoutPriceWei: 10000})

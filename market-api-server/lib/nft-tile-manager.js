@@ -121,7 +121,7 @@ export default class NFTTileManager  {
         
       if(nextERC721Balance){ 
 
-      //  console.log('pollNextERC721Balance',nextERC721Balance)
+        console.log('pollNextERC721Balance',nextERC721Balance)
          
         await this.updateNftTilesFromERC721Balance(nextERC721Balance)
         

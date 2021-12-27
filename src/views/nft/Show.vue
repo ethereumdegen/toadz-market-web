@@ -198,8 +198,7 @@ const BN = web3utils.BN
 
 const envName = process.env.NODE_ENV
 
-const FrontendConfig = require('../config/FrontendConfig.json')[envName]
-
+const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 const StoreContractABI = require( '../../contracts/BlockStoreABI.json'  )
 

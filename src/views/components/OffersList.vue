@@ -52,7 +52,7 @@ const StoreContractABI = require( '../../contracts/BlockStoreABI.json'  )
 
 const envName = process.env.NODE_ENV
 
-const FrontendConfig = require('../config/FrontendConfig.json')[envName]
+const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 
 const web3utils = require('web3').utils

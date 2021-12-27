@@ -38,7 +38,7 @@ import PaginationBar from './PaginationBar.vue';
 
 const envName = process.env.NODE_ENV
 
-const FrontendConfig = require('../config/FrontendConfig.json')[envName]
+const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 export default {
   name: 'TiledTokenBrowser',

@@ -93,7 +93,7 @@ const web3utils = require('web3').utils
 
 const envName = process.env.NODE_ENV
 
-const FrontendConfig = require('../config/FrontendConfig.json')[envName]
+const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 const offchainOrderPacketConfig = require('../../js/eip712-config.json')
 

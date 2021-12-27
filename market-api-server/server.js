@@ -47,7 +47,14 @@ let dataghostConfig = dataghostConfigFile[envmode]
     await vibegraphInterface.init( dataghostConfig.vibeGraphConfig.dbName )
  
 
-    let web3 = new Web3( serverConfig.web3provider  )
+    //let web3 = new Web3( serverConfig.web3provider  )
+
+    let web3 = new Web3(new Web3.providers.WebsocketProvider( serverConfig.web3provider, {
+      clientConfig: {
+        maxReceivedFrameSize: 100000000,
+        maxReceivedMessageSize: 100000000,
+      }
+    }));
 
 
     let dataghost = new DataGhost()

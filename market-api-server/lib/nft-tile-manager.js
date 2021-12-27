@@ -211,10 +211,12 @@ export default class NFTTileManager  {
 
       if(marketOrder.status == 'valid'){
         
-        if(matchingNFTTile && (!matchingNFTTile.lowestBuyoutPriceWei || !matchingNFTTile.buyoutPriceFromOrderId || matchingNFTTile.lowestBuyoutPriceWei > orderBuyoutPriceWei )){
-          await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {lowestBuyoutPriceWei: orderBuyoutPriceWei, buyoutPriceFromOrderId: AppHelper.mongoIdToNumber(marketOrder._id) })
+        if(marketOrder.isSellOrder){
+          if(matchingNFTTile && (!matchingNFTTile.lowestBuyoutPriceWei || !matchingNFTTile.buyoutPriceFromOrderId || matchingNFTTile.lowestBuyoutPriceWei > orderBuyoutPriceWei )){
+            await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {lowestBuyoutPriceWei: orderBuyoutPriceWei, buyoutPriceFromOrderId: AppHelper.mongoIdToNumber(marketOrder._id) })
+          }
         }
-       
+        
 
       }else{
        // let buyoutPriceWasFromStaleOrder = false 

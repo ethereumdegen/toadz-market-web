@@ -123,7 +123,7 @@ export default class NFTTileManager  {
 
       let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne(  {$size:  {$not:0}, lastPolledAt:  {$not: {$gte: beforeTime }} })
       
-      console.log(nextERC721Balance)
+     // console.log(nextERC721Balance)
         
       if(nextERC721Balance){ 
 

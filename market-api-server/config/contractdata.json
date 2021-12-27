@@ -5,7 +5,7 @@
       "weth":{"name":"wEth","address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals":18, "minBidAmount":0.02},
       
  
-      "blockstore":{"address":"0x0419732028fa499200a0e36972e4c139e98d28e1"}, 
+      "blockstore":{"name":"BlockStore", "address":"0x0419732028fa499200a0e36972e4c139e98d28e1"}, 
        
       "cryptoadz":{"name":"Cryptoadz","address":"0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6"}, 
       "cryptoflyz":{"name":"Cryptoflyz","address":"0xf8b0a49da21e6381f1cd3cf43445800abe852179"}, 
@@ -27,7 +27,7 @@
       "cryptoflyz":{"name":"Cryptoflyz","address":"0xfc957dcbe0785ababa07429e4fffe8ad58bd612d"}, 
   
  
-      "blockstore":{"address":"0x843f116649dda1222812ed6881175bd4206e1fad"}, 
+      "blockstore":{"name":"BlockStore","address":"0x843f116649dda1222812ed6881175bd4206e1fad"}, 
        
       "artblocks":{"name":"ArtBlocks","address":"0x1f318502998772564ab84792edf6a1f66d5ff22d"}, 
  

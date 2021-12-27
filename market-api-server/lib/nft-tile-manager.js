@@ -115,13 +115,15 @@ export default class NFTTileManager  {
 
       const STALE_TIME = 360*1000;
 
-      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne({lastPolledAt:  {$not: {$gte:Date.now() - STALE_TIME }} })
+      let beforeTime = (Date.now() - STALE_TIME)
+
+      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne({lastPolledAt:  {$not: {$gte: beforeTime }} })
       
 
         
       if(nextERC721Balance){ 
 
-        console.log('pollNextERC721Balance',nextERC721Balance)
+        console.log('pollNextERC721Balance',nextERC721Balance , beforeTime)
          
         await this.updateNftTilesFromERC721Balance(nextERC721Balance)
         

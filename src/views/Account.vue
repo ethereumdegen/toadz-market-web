@@ -68,6 +68,11 @@
           </div>
 
 
+          <div  class=" " v-if="!allOwnedNFTs || allOwnedNFTs.length == 0" >
+              No toadz here!!  Only !vibe.  
+          </div>
+
+
           
        </div>
 

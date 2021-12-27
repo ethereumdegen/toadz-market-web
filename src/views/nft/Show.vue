@@ -17,7 +17,7 @@
 
    <div class="section  bg-white border-b-2 border-black">
 
-     <div class=" container mb-16 margin-center">
+     <div class=" container  margin-center">
 
      
      <div class="grid grid-cols-3 gap-4 p-4  text-gray-800">

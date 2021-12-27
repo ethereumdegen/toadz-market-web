@@ -30,6 +30,30 @@
   
 
           </div>
+
+
+          <div class="m-4 p-4 border-2 border-gray-500 font-boring" style="min-height:50px; "> 
+            <table class="table-auto" > 
+
+              <thead>
+              <tr>
+                <th> </th>
+                <th> </th>
+                
+              </tr>
+          </thead>
+          <tbody>
+            <tr v-for="trait in nftTraitsArray" v-bind:key="trait.trait_type">
+              <td class="px-2 font-bold">{{ trait.trait_type }}</td>
+              <td class="px-2">{{ trait.value }}</td>
+             
+            </tr> 
+              </tbody>
+            </table>
+  
+
+          </div>
+
        </div>
 
          <div class="col-span-2 p-2">
@@ -216,7 +240,9 @@ export default {
 
       activeAccountAddress: null,
 
-      bestSellOrder:null
+      bestSellOrder:null,
+
+      nftTraitsArray:[]
 
     }
   },
@@ -448,6 +474,8 @@ export default {
 
             if(output){
               this.tokenOwnerAddress = output.ownerPublicAddress
+
+              this.nftTraitsArray = output.nftTraits
             }
             
 

@@ -11,13 +11,7 @@ export default class PopulateTraitsTask {
 
 
 static async runTask( mongoInterface ){
-
-  //  const dbName = 'toadz_market'
-
- //const mongoInterface = new MongoInterface()
- //await mongoInterface.init( dbName )
-
-// console.log('outputConfig',outputConfig)
+ 
 
 let traitsTokenIdMap = { } 
  
@@ -29,7 +23,7 @@ for(let [tokenId,traitsArray] of Object.entries(outputConfig)){
 
     for(let trait of traitsArray){
         let traitType = trait.trait_type.toString()
-        let traitValue = trait.value
+        let traitValue = trait.value.toString()
         
         if(!traitsTokenIdMap[traitType]){   
             traitsTokenIdMap[traitType] = {} 
@@ -60,6 +54,8 @@ await traitsModel.deleteMany({collectionName:'Cryptoadz'})
                     collectionName:'Cryptoadz',
                     traitType: traitType,
                     value: traitValue,
+                    traitTypeLower: traitType.toLowerCase(),
+                    valueLower: traitValue.toLowerCase(),
                     tokenIdArray: traitsTokenIdMap[traitType][traitValue] 
                 })
                 await instance.save()

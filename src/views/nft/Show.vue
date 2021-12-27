@@ -44,8 +44,9 @@
           </thead>
           <tbody>
             <tr v-for="trait in nftTraitsArray" v-bind:key="trait.trait_type">
+
               <td class="px-2 font-bold">{{ trait.trait_type }}</td>
-              <td class="px-2">{{ trait.value }}</td>
+              <td class="px-2"> <router-link  :to="getProjectURL(trait.trait_type,trait.value)"  >   {{ trait.value }} </router-link> </td>
              
             </tr> 
               </tbody>
@@ -331,10 +332,13 @@ export default {
       },
 
 
-      getProjectURL(){  
+      getProjectURL(traitType,traitValue){  
 
         const collectionName = 'cryptoadz'
 
+        if(traitType && traitValue){
+          return '/collection/'+collectionName+'?'+`traitName=${traitType}&traitValue=${traitValue}`
+        }
        
         return '/collection/'+collectionName
       },

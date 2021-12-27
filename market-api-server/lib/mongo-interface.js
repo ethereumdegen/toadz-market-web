@@ -16,6 +16,14 @@ const TraitSchema = new Schema({
   value: {
     type: String, index: true
   },
+
+  traitTypeLower: {
+    type: String, index: true
+  },
+  valueLower: {
+    type: String, index: true
+  },
+
   tokenIdArray: {   
     type: [Number]
   }  

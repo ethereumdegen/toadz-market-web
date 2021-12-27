@@ -65,6 +65,8 @@ export default new Router({
       component: Collection
     },
 
+    
+
     {
       path: '/collection/:collectionName/:tokenId',
       name: 'NftShow',

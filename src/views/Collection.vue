@@ -109,6 +109,12 @@ export default {
   created(){
 
 
+    let queryFilterTraitName =  this.$route.query.traitName
+    let queryFilterTraitValue  =  this.$route.query.traitValue
+
+    if(queryFilterTraitName && queryFilterTraitValue){ 
+        this.tokenBrowserFilter = { traitName:queryFilterTraitName , traitValue: queryFilterTraitValue } 
+    }
 
  
     this.web3Plug.getPlugEventEmitter().on('stateChanged', function(connectionState) {
@@ -128,10 +134,7 @@ export default {
       }.bind(this));
 
       this.web3Plug.reconnectWeb()
-
-         
-   
-         
+  
 
   },
   mounted: function () {

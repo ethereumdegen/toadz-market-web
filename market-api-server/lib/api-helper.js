@@ -312,11 +312,12 @@
             collectionName = APIHelper.sanitizeString(collectionName)
             traitName = APIHelper.sanitizeString(traitName)
             traitValue = APIHelper.sanitizeString(traitValue)
-            
+
+            traitName = (traitName).toLowerCase()
+            traitValue = (traitValue).toLowerCase() 
             
             console.log('find ', collectionName, traitName , traitValue)
-            return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitType: traitName, value: traitValue })
-             
+            return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitTypeLower: traitName, valueLower: traitValue })
              
         }
 

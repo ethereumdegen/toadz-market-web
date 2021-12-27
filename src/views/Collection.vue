@@ -86,7 +86,9 @@ import TiledTokenBrowser from './components/TiledTokenBrowser.vue';
  
 import StarflaskApiHelper from '../js/starflask-api-helper.js'
 
-const FrontendConfig = require('../config/FrontendConfig.json')
+const envName = process.env.NODE_ENV
+
+const FrontendConfig = require('../config/FrontendConfig.json')[envName]
 
 export default {
   name: 'Home',

@@ -117,7 +117,7 @@ export default class NFTTileManager  {
         
      
 
-      const STALE_TIME = 3*1000;
+      const STALE_TIME = 360*1000;
 
       let beforeTime = (Date.now() - STALE_TIME)
 

@@ -1,5 +1,7 @@
 <template>
   <div  >
+
+    <div class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-black"> {{currentFilter.traitName}}: {{currentFilter.traitValue}}  </div>
           <div class="" style="min-height:400px">
               <NftTile
                 v-for="tokenData in activeNFTDataArray"

@@ -90,7 +90,7 @@ export default class NFTTileManager  {
 
         
         if(nextMarketOrder){ 
-          console.log('pollNextMarketOrder',nextMarketOrder)
+          //console.log('pollNextMarketOrder',nextMarketOrder)
 
           
           await this.updateMarketOrderStatus(nextMarketOrder)
@@ -123,7 +123,7 @@ export default class NFTTileManager  {
         
       if(nextERC721Balance){ 
 
-        console.log('pollNextERC721Balance',nextERC721Balance , beforeTime)
+       // console.log('pollNextERC721Balance',nextERC721Balance , beforeTime)
          
         await this.updateNftTilesFromERC721Balance(nextERC721Balance)
         

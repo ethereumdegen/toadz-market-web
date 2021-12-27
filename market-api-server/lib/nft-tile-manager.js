@@ -84,7 +84,7 @@ export default class NFTTileManager  {
     async pollNextMarketOrder( ){
         
       
-        const STALE_TIME = 360 * 1000;
+        const STALE_TIME = 60 * 1000;
 
         let nextMarketOrder = await this.mongoInterface.marketOrdersModel.findOne({lastPolledAt: {$not: {$gte: (Date.now() - STALE_TIME) }}  })
 
@@ -113,7 +113,7 @@ export default class NFTTileManager  {
         
      
 
-      const STALE_TIME = 360*1000;
+      const STALE_TIME = 60*1000;
 
       let beforeTime = (Date.now() - STALE_TIME)
 

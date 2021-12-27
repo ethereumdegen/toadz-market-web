@@ -312,8 +312,14 @@
             collectionName = APIHelper.sanitizeString(collectionName)
             traitName = APIHelper.sanitizeString(traitName)
             traitValue = APIHelper.sanitizeString(traitValue)
+
+            console.log('find ', collectionName, traitName , traitValue)
+
+            if(!traitName || !traitValue){
+                return await mongoInterface.traitsModel.findOne({collectionName: collectionName })
+            }
             
-                console.log('find ', collectionName, traitName , traitValue)
+            
             return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitType: traitName, value: traitValue })
              
              

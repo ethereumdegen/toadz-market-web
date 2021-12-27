@@ -1,7 +1,7 @@
 <template>
   <div  >
 
-    <div class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-black"> {{currentFilter.traitName}}: {{currentFilter.traitValue}}  </div>
+    <div v-if="currentFilter && currentFilter.traitName" class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-black"> {{currentFilter.traitName}}: {{currentFilter.traitValue}}  </div>
           <div class="" style="min-height:400px">
               <NftTile
                 v-for="tokenData in activeNFTDataArray"
@@ -74,16 +74,19 @@ export default {
   created(){
 
   },
+  mounted(){
+    this.fetchFilteredTokensArray()
+
+  },
   methods: {
       async fetchFilteredTokensArray(){
-        console.log('fetching results  - new current filter ')
+        console.log('fetching results  - new current filter ', this.currentFilter)
         // this.currentFilter 
 
          let uri = FrontendConfig.marketApiRoot+'/api/v1/apikey'
           
 
-         //let collectionName = FrontendHelper.getCollectionNameForContractAddress( result.contractAddress, this.activeNetworkId  )
-
+         
 
          let inputQuery = Object.assign( {collectionName: this.collectionName }, this.currentFilter   )
          let result = await StarflaskApiHelper.resolveStarflaskQuery(uri,{"requestType": "NFTTiles_by_trait_value", "input": inputQuery})

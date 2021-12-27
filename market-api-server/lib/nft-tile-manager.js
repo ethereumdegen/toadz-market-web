@@ -125,9 +125,9 @@ export default class NFTTileManager  {
          
         await this.updateNftTilesFromERC721Balance(nextERC721Balance)
         
-        let updated = await this.vibegraphInterface.erc721BalancesModel.updateOne({_id: nextERC721Balance._id}, {lastPolledAt: Date.now()})
+         await this.vibegraphInterface.erc721BalancesModel.updateOne({_id: nextERC721Balance._id}, {lastPolledAt: Date.now()})
 
-         console.log('updated',updated)
+         
       }else{
         //none found 
         //return
@@ -151,7 +151,8 @@ export default class NFTTileManager  {
       let matchingNFTTile = await this.mongoInterface.cachedNFTTileModel.findOne({collectionName: collectionName , tokenId: tokenId })
      
        if(matchingNFTTile && ownerAddress != AppHelper.toChecksumAddress(matchingNFTTile.ownerPublicAddress)){
-        await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {ownerPublicAddress: ownerAddress})
+        let tileUpdate = await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {ownerPublicAddress: ownerAddress})
+        console.log('tileUpdate',tileUpdate)
       }
     } 
 

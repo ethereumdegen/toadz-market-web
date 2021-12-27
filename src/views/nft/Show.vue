@@ -258,9 +258,11 @@ export default {
     this.nftTokenId = parseInt( this.$route.params.tokenId )
 
 
+      //assume network is mainnet 
      this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, this.web3Plug.getContractDataForNetworkID(1)  )
       
       this.fetchTokenData() 
+       this.fetchOrdersForToken()
 
     
     
@@ -272,7 +274,7 @@ export default {
 
 
         if(!this.activeNetworkId) this.activeNetworkId = 1;
-        
+
         let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
 
         this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, contractData  )

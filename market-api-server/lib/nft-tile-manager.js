@@ -125,9 +125,9 @@ export default class NFTTileManager  {
          
         await this.updateNftTilesFromERC721Balance(nextERC721Balance)
         
-        await this.vibegraphInterface.erc721BalancesModel.updateOne({_id: nextERC721Balance._id}, {lastPolledAt: Date.now()})
+        let updated = await this.vibegraphInterface.erc721BalancesModel.updateOne({_id: nextERC721Balance._id}, {lastPolledAt: Date.now()})
 
-         
+         console.log('updated',updated)
       }else{
         //none found 
         //return

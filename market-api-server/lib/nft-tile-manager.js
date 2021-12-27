@@ -98,13 +98,17 @@ export default class NFTTileManager  {
           
           await this.mongoInterface.marketOrdersModel.updateOne({_id: nextMarketOrder._id}, {lastPolledAt: Date.now()})
 
-           
+
+          setTimeout( this.pollNextMarketOrder.bind(this), 10)
+
         }else{
           //none found 
           //return
+
+          setTimeout( this.pollNextMarketOrder.bind(this), 200)
         }
 
-        setTimeout( this.pollNextMarketOrder.bind(this), 10)
+        
 
     }
 
@@ -117,9 +121,9 @@ export default class NFTTileManager  {
 
       let beforeTime = (Date.now() - STALE_TIME)
 
-      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne({lastPolledAt:  {$not: {$gte: beforeTime }} })
+      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne(  {$size:  {$not:0}, lastPolledAt:  {$not: {$gte: beforeTime }} })
       
-
+      console.log(nextERC721Balance)
         
       if(nextERC721Balance){ 
 
@@ -129,13 +133,17 @@ export default class NFTTileManager  {
         
          await this.vibegraphInterface.erc721BalancesModel.updateOne({_id: nextERC721Balance._id}, {lastPolledAt: Date.now()})
 
-         
+
+         setTimeout( this.pollNextERC721Balance.bind(this), 10)
+
       }else{
         //none found 
         //return
+
+        setTimeout( this.pollNextERC721Balance.bind(this), 200)
       }
 
-      setTimeout( this.pollNextERC721Balance.bind(this), 10)
+     // setTimeout( this.pollNextERC721Balance.bind(this), 10)
 
   }
 

@@ -150,7 +150,7 @@ export default {
 
             if(!activeNetworkId) activeNetworkId = 1;   
  
-            let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
 
 
           let storeContractAddress = contractData['blockstore'].address

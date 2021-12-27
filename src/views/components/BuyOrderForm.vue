@@ -226,12 +226,12 @@ export default {
 
         async getWethBalance(){
 
-            let activeNetworkId = this.web3Plug.getActiveNetId() 
+             let activeNetworkId = this.web3Plug.getActiveNetId() 
 
             if(!activeNetworkId) activeNetworkId = 1;   
  
-            let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
-
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+            
             let storeContractAddress = contractData['blockstore'].address
             let wethContractAddress = contractData['weth'].address 
 

@@ -270,11 +270,11 @@ export default {
         this.activeAccountAddress = connectionState.activeAccountAddress
         this.activeNetworkId = connectionState.activeNetworkId
 
-          let contractData = this.web3Plug.getContractDataForActiveNetwork()
 
+        if(!this.activeNetworkId) this.activeNetworkId = 1;
+        
+        let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
 
-
-          
         this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, contractData  )
           console.log('found nftContractAddress',this.nftContractAddress)
 

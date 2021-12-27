@@ -184,7 +184,7 @@ export default {
 
                 }  
 
-                if(result.isSalesOrder){
+                if(result.isSellOrder){
                   this.recentOffersArray.push(row)
                 }else{
                   this.recentBidsArray.push(row)

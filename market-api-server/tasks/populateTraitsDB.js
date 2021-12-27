@@ -5,13 +5,22 @@ import FileHelper from '../lib/file-helper.js'
  
  
 
-let outputConfig = FileHelper.readJSONFile('./market-api-server/output/outputconfig.json')
+let outputConfig = FileHelper.readJSONFile('./market-api-server/output/toadzOutputData.json')
  
 export default class PopulateTraitsTask {
 
 
-static async runTask( mongoInterface ){
+static async runTask( inputs, mongoInterface ){
  
+let collectionName = inputs.collectionName 
+
+if(collectionName.toLowerCase() == 'cryptoadz'){
+    outputConfig = FileHelper.readJSONFile('./market-api-server/output/toadzOutputData.json')
+}
+if(collectionName.toLowerCase() == 'cryptoflyz'){
+    outputConfig = FileHelper.readJSONFile('./market-api-server/output/flyzOutputData.json')
+}
+
 
 let traitsTokenIdMap = { } 
  
@@ -43,7 +52,7 @@ for(let [tokenId,traitsArray] of Object.entries(outputConfig)){
 }   
  
 const traitsModel =  mongoInterface.traitsModel
-await traitsModel.deleteMany({collectionName:'Cryptoadz'})
+await traitsModel.deleteMany({collectionName: collectionName})
 
 
  for(let traitType of Object.keys(traitsTokenIdMap)){
@@ -51,7 +60,7 @@ await traitsModel.deleteMany({collectionName:'Cryptoadz'})
   
 
                 const instance =  new traitsModel({
-                    collectionName:'Cryptoadz',
+                    collectionName: collectionName,
                     traitType: traitType,
                     value: traitValue,
                     traitTypeLower: traitType.toLowerCase(),
@@ -64,7 +73,7 @@ await traitsModel.deleteMany({collectionName:'Cryptoadz'})
     }
  }
 
- console.log('PopulateTraitsTask: task complete.')
+ console.log(`PopulateTraitsTask ${collectionName}: task complete.`)
     
 
 }

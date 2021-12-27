@@ -37,8 +37,11 @@ let dataghostConfig = dataghostConfigFile[envmode]
     await mongoInterface.init(  serverConfig.dbName )
 
  
-    await PopulateTraitsTask.runTask(mongoInterface)
-    await PopulateCachedNFTTilesTask.runTask(mongoInterface)
+    await PopulateTraitsTask.runTask({collectionName:'Cryptoadz'},mongoInterface)
+    await PopulateCachedNFTTilesTask.runTask({collectionName:'Cryptoadz'},mongoInterface)
+
+    await PopulateTraitsTask.runTask({collectionName:'Cryptoflyz'},mongoInterface)
+    await PopulateCachedNFTTilesTask.runTask({collectionName:'Cryptoflyz'},mongoInterface)
  
 
     console.log('boot vibegraph interface ', dataghostConfig.vibeGraphConfig.dbName)

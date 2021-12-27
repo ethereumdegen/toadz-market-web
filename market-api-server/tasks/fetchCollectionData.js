@@ -3,17 +3,17 @@ import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
  
-import MerkleTree from 'merkletreejs'
+/*import MerkleTree from 'merkletreejs'
  
 import keccak256 from 'keccak256'
 
-import Web3 from 'web3'
+import Web3 from 'web3'*/
 import FileHelper from '../lib/file-helper.js'
  
-let web3 = new Web3() 
+//let web3 = new Web3() 
  
 
-let fetchConfig = FileHelper.readJSONFile('./tasks/fetchConfig.json')
+let fetchConfig = FileHelper.readJSONFile('./market-api-server/tasks/fetchConfig.json')
  
 
 async function runTask(){
@@ -32,8 +32,7 @@ let tokenIds = []
 
 
 let traitsMap = {} 
- 
-
+  
 
 for(let offset=0; offset<totalSupply; offset+=50){
 
@@ -48,14 +47,14 @@ for(let offset=0; offset<totalSupply; offset+=50){
 
     for(let asset of res.data.assets){
 
+        
         tokenIds.push(asset.token_id)
 
-
+         
         await downloadImage(asset.token_id, asset.image_url)
+       
 
-      //  console.log('asset', asset )
-
-        //console.log('traits', asset.traits )
+       
         traitsMap[asset.token_id] = asset.traits 
 
 
@@ -111,7 +110,11 @@ let data = {
 //console.log("hexRoot is ", hexRoot )
 
 
- // fs.writeFileSync( path.join ( "./output/outputconfig.json" ) , JSON.stringify( traitsMap ) );
+
+
+
+
+// fs.writeFileSync( path.join ( "./market-api-server/output/outputconfig.json" ) , JSON.stringify( traitsMap ) );
  
 
 
@@ -125,13 +128,25 @@ runTask()
 
 
 async function  downloadImage(tokenId, url){
+  
+    //console.log('dl images', tokenId)
+   // if(tokenId == 2484 || tokenId== 3875 || tokenId == 2160 || tokenId == 4700 
+   //     || tokenId == 2841) return 
 
-    let image_path = path.join ( `./output/${tokenId}.jpg` )
+    let image_path = path.join ( `./market-api-server/output/images/${tokenId}.jpg` )
+
+
+        
+    let existingImage = fs.existsSync(image_path ); 
+    if(existingImage) { 
+        console.log(tokenId,' already exists')
+     }
+
 
     return new Promise(async (resolve, reject) => {
         const writer = fs.createWriteStream(image_path)
 
-
+         
         const response = await axios({
             url,
             method: 'GET',
@@ -139,6 +154,7 @@ async function  downloadImage(tokenId, url){
         })
 
         response.data.pipe(writer)
+    
 
         writer.on('finish', () => resolve())
         writer.on('error', reject)

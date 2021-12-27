@@ -1,36 +1,42 @@
  
 import FileHelper from '../lib/file-helper.js'
 
-//import MongoInterface from '../lib/mongo-interface.js'
- 
  
 
-let outputConfig = FileHelper.readJSONFile('./market-api-server/output/outputconfig.json')
+let outputConfig = FileHelper.readJSONFile('./market-api-server/output/toadzOutputData.json')
  
 export default class PopulateCachedNFTTilesTask {
 
 
-static async runTask( mongoInterface ){
+static async runTask(inputs, mongoInterface ){
 
-  //  const dbName = 'toadz_market'
+    
+let collectionName = inputs.collectionName 
 
- //const mongoInterface = new MongoInterface()
- //await mongoInterface.init( dbName )
+if(collectionName.toLowerCase() == 'cryptoadz'){
+    outputConfig = FileHelper.readJSONFile('./market-api-server/output/toadzOutputData.json')
+}
+if(collectionName.toLowerCase() == 'cryptoflyz'){
+    outputConfig = FileHelper.readJSONFile('./market-api-server/output/flyzOutputData.json')
+}
 
-// console.log('outputConfig',outputConfig)
+
 
 let tokenDataArray = []
   
 
 for(let [tokenId,traitsArray] of Object.entries(outputConfig)){
 
-    tokenDataArray.push({collectionName: "Cryptoadz", tokenId: tokenId, nftTraits:traitsArray })
+    tokenDataArray.push({
+        collectionName:  collectionName,
+         tokenId: tokenId,
+          nftTraits:traitsArray
+ })
 
 }   
  
 const nftTilesModel =  mongoInterface.cachedNFTTileModel
-//await traitsModel.deleteMany({collectionName:'Cryptoadz'})
-
+ 
 
 try{
     await nftTilesModel.insertMany(tokenDataArray,{ ordered: false })
@@ -40,7 +46,7 @@ try{
 
  
   
- console.log('PopulateCachedNFTTilesTask: task complete.')
+ console.log(`PopulateCachedNFTTilesTask ${collectionName}: task complete.`)
     
 
 }

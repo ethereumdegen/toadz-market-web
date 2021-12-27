@@ -31,9 +31,11 @@
           <div class="md:col-span-3 p-2"> 
             
             
-                <TiledTokenBrowser 
+                <TiledTokenBrowser
+                  ref="TokenBrowser"  
                   v-bind:collectionName="collectionName"
                   v-bind:currentFilter="tokenBrowserFilter"
+                  v-bind:updatedCurrentPageCallback="updatedCurrentPageCallback"
 
                 /> 
             
@@ -102,7 +104,9 @@ export default {
       activePanelId: null ,
         
       filterTraitsList: {},
-      tokenBrowserFilter: {} 
+      tokenBrowserFilter: {},
+
+      currentPage: 1
     }
   },
 
@@ -125,6 +129,8 @@ export default {
     let queryFilterTraitValue  =  this.$route.query.traitValue
 
     if(queryFilterTraitName && queryFilterTraitValue){ 
+
+        
         this.tokenBrowserFilter = { traitName:queryFilterTraitName , traitValue: queryFilterTraitValue } 
     }
 
@@ -187,9 +193,18 @@ export default {
           },
 
           onClickTraitCallback(result){ 
+ 
+            //set page to 1 
+            this.currentPage = 1
+
+             this.$refs.TokenBrowser.forceSetPage( this.currentPage ) 
+             
 
             this.tokenBrowserFilter = { traitName: result.parent , traitValue: result.leaf } 
-          },
+           
+            this.updateRouteParams()
+
+         },
 
           setActivePanel(panelId){
               if(panelId == this.activePanelId){
@@ -201,10 +216,22 @@ export default {
           onTabSelect(tabname){
             console.log(tabname)
 
-              this.selectedTab = tabname.toLowerCase()
-
+              this.selectedTab = tabname.toLowerCase() 
 
           },
+
+          updatedCurrentPageCallback(currentPage){
+             this.currentPage = currentPage  
+             this.updateRouteParams()
+          },
+
+          updateRouteParams(){
+             this.$router.replace({ query: {
+               page: this.currentPage,
+               traitName: this.tokenBrowserFilter.traitName,
+               traitValue: this.tokenBrowserFilter.traitValue
+             } }); 
+          }
           
 
   }

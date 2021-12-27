@@ -44,7 +44,7 @@ const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 export default {
   name: 'TiledTokenBrowser',
-  props: [ 'collectionName', 'currentFilter' ],
+  props: [ 'collectionName', 'currentFilter', 'updatedCurrentPageCallback' ],
   components: {NftTile,PaginationBar},
   watch: {
     currentFilter: {
@@ -60,21 +60,31 @@ export default {
   data() {
     return {
      // collectionName: null,
-      //tokenArray: [],
+       
 
-      resultsDataArray : [],
-    //  activeTokenIdArray: [],
+      tilesDataArray : [],
+   
       activeNFTDataArray: [],
-      currentPage: 0,
-      maxPages: 0,
+      currentPage: 1,
+      maxPages: 1,
       itemsPerPage: 25
 
     }
   },
   created(){
-
+    
   },
   mounted(){
+    if(this.$route.query.page){
+      this.currentPage = this.$route.query.page
+    }
+    if(isNaN(this.currentPage) || this.currentPage < 1){
+      this.currentPage = 1
+    }
+
+    this.$router.replace({ query: {page: this.currentPage} });
+     
+
     this.fetchFilteredTokensArray()
 
   },
@@ -86,50 +96,55 @@ export default {
          let uri = FrontendConfig.marketApiRoot+'/api/v1/apikey'
           
  
-         let inputQuery = Object.assign( {collectionName: this.collectionName }, this.currentFilter   )
+         let inputQuery = Object.assign( {
+           collectionName: this.collectionName,
+           page: this.currentPage,
+           maxItemsPerPage: this.itemsPerPage
+          
+          }, this.currentFilter   )
 
  
          let result = await StarflaskApiHelper.resolveStarflaskQuery(uri,{"requestType": "NFTTiles_by_trait_value", "input": inputQuery})
            
            let input = result.input 
-           let output = result.output 
-
+           let output = result.output  
          
  
            if(input && input.traitValue == this.currentFilter.traitValue && output){
                
-              this.resultsDataArray = output
-             
-              this.currentPage = 1
+                this.tilesDataArray = output.tiles
+              
 
-                this.maxPages = Math.ceil( this.resultsDataArray.length / this.itemsPerPage ) + 1
-                this.activeNFTDataArray = this.filterTokensForCurrentPage(this.resultsDataArray)
+                this.maxPages = Math.ceil( output.totalTilesInGroup  / this.itemsPerPage ) + 1
+                this.activeNFTDataArray = this.filterTokensForCurrentPage(this.tilesDataArray)
 
+                console.log('max pages ', this.maxPages)
+
+              console.log('this.activeNFTDataArray',this.activeNFTDataArray)
  
            }
         
       },
 
+      forceSetPage( newPage ){
+        this.currentPage = newPage  
+      },
+
       filterTokensForCurrentPage(allTokenData){
-        //sort 
+       
 
-        //slice 
-        let startIndex = (this.currentPage-1) * this.itemsPerPage;
-        let endIndex = startIndex+this.itemsPerPage
-
-        console.log('start,end', startIndex, endIndex)
-
-        return allTokenData.slice(startIndex,endIndex)
+         return allTokenData.slice(0,this.itemsPerPage)
         
       },
 
-      setCurrentPageCallback(newPage){
-        console.log('newPage',newPage)
-        this.currentPage = newPage 
+      async setCurrentPageCallback(newPage){
+         
+        this.currentPage = newPage  
 
+        await this.fetchFilteredTokensArray()
 
-        this.activeNFTDataArray = this.filterTokensForCurrentPage(this.resultsDataArray)
-
+        this.updatedCurrentPageCallback(this.currentPage)
+       
 
       },
 

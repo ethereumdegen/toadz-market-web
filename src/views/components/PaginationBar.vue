@@ -53,6 +53,9 @@ export default {
     // whenever currentPage changes, this function will run
     currentPage: function (newPage,oldPage) {
        this.updateTabLabels()
+    },
+     maxPages: function (newPage,oldPage) {
+       this.updateTabLabels()
     }
   },
 

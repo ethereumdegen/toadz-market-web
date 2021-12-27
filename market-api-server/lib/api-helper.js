@@ -148,7 +148,12 @@
  
                 let inputParameters = inputData.input
   
-                let results = await APIHelper.findAllNFTTilesByTraitValue( inputParameters.collectionName, inputParameters.traitName ,inputParameters.traitValue, mongoInterface)
+                let results = await APIHelper.findAllNFTTilesByTraitValue( inputParameters.collectionName, 
+                    inputParameters.traitName ,
+                    inputParameters.traitValue,
+                    inputParameters.page,
+                    inputParameters.maxItemsPerPage,
+                     mongoInterface)
  
                 return {success:true, input: inputParameters, output: results  }
             }
@@ -328,7 +333,7 @@
             return tile
         }
 
-        static async findAllNFTTilesByTraitValue(collectionName,traitName,traitValue,mongoInterface){
+        static async findAllNFTTilesByTraitValue(collectionName,traitName,traitValue, currentPage, maxItemsPerPage,  mongoInterface){
             
             let allTiles = []
 
@@ -374,9 +379,11 @@
 
             allTiles.sort(nftTileBuyoutSort)
 
+            let totalGroupLength = allTiles.length
+ 
+            let {startIndex,endIndex} = APIHelper.getPagesStartEnd(currentPage, maxItemsPerPage )
 
-
-            return allTiles 
+            return {tiles: allTiles.slice(startIndex,endIndex), totalTilesInGroup: totalGroupLength }
         }   
 
         static async findAllNFTTilesByOwner(ownerAddress, filterNFTCollections, mongoInterface){
@@ -386,6 +393,15 @@
  
 
             return allTiles
+        }
+
+
+        static getPagesStartEnd(currentPage, maxItemsPerPage){
+
+            let startIndex = (currentPage-1) * maxItemsPerPage;
+            let endIndex = startIndex+maxItemsPerPage
+
+            return {startIndex,endIndex}
         }
 
 

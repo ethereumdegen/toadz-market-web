@@ -181,7 +181,8 @@ export default {
   mounted: function () {
     
      this.reconnectWeb3()
- 
+
+      this.fetchOwnedTokens()
    
   }, 
    beforeDestroy(){
@@ -230,12 +231,12 @@ export default {
 
           async fetchOwnedTokens(){
 
-             let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
-  
-            //let filterNFTcontracts = FrontendConfig.filterNFTContracts
-            let filterNFTcontracts  = ['Cryptoadz']
+            //if(!this.activeNetworkId) this.activeNetworkId = 1;
 
-            //filterNFTcontracts.push(contractData['cryptoadz'].address)
+            //let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
+ 
+   
+            let filterNFTcontracts  = ['Cryptoadz'] 
 
 
              console.log('filterNFTcontracts',filterNFTcontracts)
@@ -247,8 +248,7 @@ export default {
             this.allOwnedNFTs = []
 
 
-            for(let result of results.output){
-             
+            for(let result of results.output){ 
 
                 
                 this.allOwnedNFTs.push(result)

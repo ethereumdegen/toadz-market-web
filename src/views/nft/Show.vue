@@ -60,7 +60,7 @@
 
           <div class="py-2">
 
-            <div class="text-lg"> {{getAssetName() }} </div>
+            <div class="text-lg"> {{getCollectionName() }} </div>
 
             <a class="text-sm font-bold" v-bind:href="getProjectURL()"> {{getCollectionName() }} </a>
 
@@ -242,19 +242,25 @@ export default {
 
       bestSellOrder:null,
 
-      nftTraitsArray:[]
+      nftTraitsArray:[],
+
+      collectionName: undefined
 
     }
   },
-  mounted: function () {
+  mounted:   function () {
 
 
-    let collectionName = this.$route.params.collectionName
+    this.collectionName = this.$route.params.collectionName
 
       
    // this.nftContractAddress = FrontendHelper.getContractAddressFromCollectionName(collectionName)
     this.nftTokenId = parseInt( this.$route.params.tokenId )
 
+
+     this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, this.web3Plug.getContractDataForNetworkID(1)  )
+      
+      this.fetchTokenData() 
 
     
     
@@ -269,7 +275,7 @@ export default {
 
 
           
-        this.nftContractAddress = FrontendHelper.lookupContractAddress(  collectionName, contractData  )
+        this.nftContractAddress = FrontendHelper.lookupContractAddress(  this.collectionName, contractData  )
           console.log('found nftContractAddress',this.nftContractAddress)
 
 
@@ -337,7 +343,7 @@ export default {
       getCollectionName(){
           //make this come from a giant config file that uses contract address and token id to look up 
       
-        return AssetDataHelper.getCollectionNameForAsset(this.nftContractAddress, this.nftTokenId)
+        return this.collectionName
       },
 
      
@@ -462,9 +468,12 @@ export default {
 
        async fetchTokenData(){  
 
-          console.log('fetchTokenData', FrontendConfig.tokenDataApiRoot,this.nftContractAddress )
+          
 
-            let collectionName = AssetDataHelper.getProjectNameForAsset( this.nftContractAddress )
+            let collectionName = this.collectionName
+
+            
+            console.log('fetchTokenData', FrontendConfig.tokenDataApiRoot, collectionName)
 
             let results = await StarflaskAPIHelper.resolveStarflaskQuery( FrontendConfig.tokenDataApiRoot+'/api/v1/apikey', {"requestType": "NFTTile_by_token_id", "input":{"collectionName":collectionName,"tokenId":  this.nftTokenId}  }    )
 

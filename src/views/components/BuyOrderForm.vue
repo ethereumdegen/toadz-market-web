@@ -269,7 +269,9 @@ export default {
 
            let approvedAmount = maxBidAmount 
 
-           let response = await this.web3Plug.getTokenContract(wethContractAddress).methods.approve( storeContractAddress, approvedAmount ).send( {from: this.web3Plug.getActiveAccountAddress()}  )
+           let response = await this.web3Plug.getTokenContract(wethContractAddress).methods
+           .approve( storeContractAddress, approvedAmount )
+           .send( {from: this.web3Plug.getActiveAccountAddress()}  )
 
 
         },

@@ -44,7 +44,7 @@
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vue-tailwind": "^1.2.6",
-    "web3": "^1.2.11"
+    "web3": "^1.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",

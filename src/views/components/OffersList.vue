@@ -213,7 +213,9 @@ export default {
   
 
 
-          let response = await this.web3Plug.getNFTContract(this.nftContractAddress).methods.setApprovalForAll( storeContractAddress, true ).send( {from: this.web3Plug.getActiveAccountAddress()}  )
+          let response = await this.web3Plug.getNFTContract(this.nftContractAddress).methods
+          .setApprovalForAll( storeContractAddress, true )
+          .send( {from: this.web3Plug.getActiveAccountAddress()}  )
 
 
         },

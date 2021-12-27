@@ -226,12 +226,11 @@ export default {
 
         async getWethBalance(){
 
-             let activeNetworkId = this.web3Plug.getActiveNetId() 
-
-            if(!activeNetworkId) activeNetworkId = 1;   
+             let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
  
             let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
-            
+
             let storeContractAddress = contractData['blockstore'].address
             let wethContractAddress = contractData['weth'].address 
 
@@ -242,7 +241,11 @@ export default {
 
         async getApprovedWethAmount(){
 
-            let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+             let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
+ 
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+
 
             let storeContractAddress = contractData['blockstore'].address
             let wethContractAddress = contractData['weth'].address 
@@ -255,7 +258,11 @@ export default {
         async approveAllWeth(){
            console.log('approve all ')
 
-           let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+            let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
+ 
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+
 
            let storeContractAddress = contractData['blockstore'].address
            let wethContractAddress = contractData['weth'].address 
@@ -282,7 +289,11 @@ export default {
           
           console.log('create Buy Order ')
 
-          let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+           let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
+ 
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+
 
           let storeContractAddress = contractData['blockstore'].address
           let wethAddress = contractData['weth'].address

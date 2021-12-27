@@ -175,7 +175,11 @@ export default {
         async approveAllNFT(){
           console.log('approve all ')
 
-          let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+           let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
+ 
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+
 
           let storeContractAddress = contractData['blockstore'].address
   
@@ -212,7 +216,11 @@ export default {
 
 
           
-          let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+             let activeNetworkId = this.web3Plug.getActiveNetId()   
+             if(!activeNetworkId) activeNetworkId = 1;   
+ 
+            let contractData = this.web3Plug.getContractDataForNetworkID(activeNetworkId)
+
 
           let storeContractAddress = contractData['blockstore'].address
 

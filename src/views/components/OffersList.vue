@@ -167,7 +167,11 @@ export default {
 
         async checkForApproval(){ 
 
-          let contractData = this.web3Plug.getContractDataForActiveNetwork() ;
+          let activeNetworkId = this.web3Plug.getActiveNetId() 
+
+          if(!activeNetworkId) activeNetworkId = 1;   
+
+          let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
 
           let storeContractAddress = contractData['blockstore'].address
 

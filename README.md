@@ -14,8 +14,7 @@ TODO:
 
 -make the API more ironclad against direct access/attacks/injection 
 
-
--  fix pagination bar (0 not 1 )
+ 
 
 
 ### TODO LATER

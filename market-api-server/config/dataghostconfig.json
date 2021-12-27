@@ -1,0 +1,61 @@
+{
+    "development":{
+        "vibeGraphConfig":{
+            "contracts":[
+          
+                {"address":"0x843f116649dda1222812ed6881175bd4206e1fad","startBlock":9300000, "type":"BlockStore"},
+                {"address":"0x70BC4cCb9bC9eF1B7E9dc465a38EEbc5d73740FB","name":"toadz","startBlock":9228750  , "type":"ERC721" } 
+            
+            ],
+            "fineBlockGap":15,
+            "courseBlockGap":2000, 
+            "dbName":"vibegraph_development",
+            "subscribe": true,
+            "logging":true
+        },
+     
+        "chainId":4
+    },
+    "staging":{
+        "vibeGraphConfig":{
+            "contracts":[
+                {"address":"0x843f116649dda1222812ed6881175bd4206e1fad","startBlock":9300000, "type":"BlockStore"},
+                {"address":"0x70BC4cCb9bC9eF1B7E9dc465a38EEbc5d73740FB","name":"toadz","startBlock":9228750  , "type":"ERC721" } 
+            
+
+            ],
+            "fineBlockGap":15,
+            "courseBlockGap":2000,
+            "dbName":"vibegraph_staging",
+            "subscribe": true,
+            "logging":true
+        },
+     
+        "chainId":4
+    },
+    "production":{
+
+        "vibeGraphConfig":{
+            "contracts":[
+                
+               
+            
+                {"address":"0x0419732028fa499200a0e36972e4c139e98d28e1","startBlock":13244370, "type":"BlockStore"},
+                {"address":"0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6","name":"toadz","startBlock":13186834 , "type":"ERC721" } 
+               
+
+
+
+            ],
+            "fineBlockGap":15,
+            "courseBlockGap":2000,
+            "dbName":"vibegraph_production",
+            "subscribe": true,
+            "logging":false
+        }, 
+        "chainId":1
+    }
+    
+    
+   
+}

@@ -1,0 +1,40 @@
+{
+  "mainnet":{
+    "contracts":{
+      
+      "weth":{"name":"wEth","address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals":18, "minBidAmount":0.02},
+      
+ 
+      "blockstore":{"address":"0x0419732028fa499200a0e36972e4c139e98d28e1"}, 
+       
+      "cryptoadz":{"address":"0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6"}, 
+       
+
+      "artblocks":{"name":"ArtBlocks","address":"0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270"} ,
+      "artblocks_legacy":{"name":"ArtBlocks","address":"0x059edd72cd353df5106d2b9cc5ab83a52287ac3a"} 
+ 
+   
+    }
+
+
+  },
+  "rinkeby":{
+    "contracts":{
+      
+      "weth":{"name":"wEth","address":"0xdf032bc4b9dc2782bb09352007d4c57b75160b15", "decimals":18, "minBidAmount":0.02},
+      "cryptoadz":{"address":"0x70BC4cCb9bC9eF1B7E9dc465a38EEbc5d73740FB"}, 
+  
+ 
+      "blockstore":{"address":"0x843f116649dda1222812ed6881175bd4206e1fad"}, 
+       
+      "artblocks":{"name":"ArtBlocks","address":"0x1f318502998772564ab84792edf6a1f66d5ff22d"}, 
+ 
+      "artblocks_legacy":{"name":"ArtBlocksLegacy","address":"0x388f486dbcbe05029ba7adf784459b580b427032"} 
+ 
+    }
+
+
+  }
+
+
+}

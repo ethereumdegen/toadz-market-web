@@ -1,0 +1,4 @@
+{
+    "tokenDataApiRoot":"http://localhost:4000",
+    "marketApiRoot":"http://localhost:4000" 
+}

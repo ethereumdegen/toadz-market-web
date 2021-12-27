@@ -33,6 +33,9 @@ const CachedNFTTileSchema = new Schema({
   tokenId: {
     type: Number, index:true
   },
+  nftTraits: {
+    type: Object
+  },
   ownerPublicAddress: {
     type: String, index: true
   },

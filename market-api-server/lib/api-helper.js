@@ -132,6 +132,18 @@
                 return {success:true, input: inputParameters, output: results  }
             }
 
+
+            
+
+            if(inputData.requestType == 'NFTTile_by_token_id'){
+ 
+                let inputParameters = inputData.input
+  
+                let results = await APIHelper.findNFTTileByTokenId( inputParameters.collectionName, inputParameters.tokenId,  mongoInterface)
+ 
+                return {success:true, input: inputParameters, output: results  }
+            }
+
             if(inputData.requestType == 'NFTTiles_by_trait_value'){
  
                 let inputParameters = inputData.input
@@ -279,6 +291,8 @@
             contractAddress = AppHelper.toChecksumAddress(contractAddress)
             return await mongoInterface.erc721BalancesModel.find({contractAddress: contractAddress, tokenIds:tokenId })
         }
+
+        
        
         static async getTraitsListForCollection(collectionName,mongoInterface){
 
@@ -303,6 +317,13 @@
             return await mongoInterface.traitsModel.findOne({collectionName: collectionName, traitType: traitName, value: traitValue })
              
              
+        }
+
+
+        static async findNFTTileByTokenId(collectionName,tokenId,mongoInterface){
+            let tile = await mongoInterface.cachedNFTTileModel.findOne({collectionName: collectionName, tokenId: tokenId })
+
+            return tile
         }
 
         static async findAllNFTTilesByTraitValue(collectionName,traitName,traitValue,mongoInterface){

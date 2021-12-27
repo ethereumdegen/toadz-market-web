@@ -24,7 +24,7 @@ let tokenDataArray = []
 
 for(let [tokenId,traitsArray] of Object.entries(outputConfig)){
 
-    tokenDataArray.push({collectionName: "Cryptoadz", tokenId: tokenId})
+    tokenDataArray.push({collectionName: "Cryptoadz", tokenId: tokenId, nftTraits:traitsArray })
 
 }   
  

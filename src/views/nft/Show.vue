@@ -438,14 +438,16 @@ export default {
 
           console.log('fetchTokenData', FrontendConfig.tokenDataApiRoot,this.nftContractAddress )
 
-            let results = await StarflaskAPIHelper.resolveStarflaskQuery( FrontendConfig.tokenDataApiRoot+'/api/v1/apikey', {"requestType": "ERC721_by_token", "input":{"contractAddress":this.nftContractAddress,"tokenId":  this.nftTokenId}  }    )
+            let collectionName = AssetDataHelper.getProjectNameForAsset( this.nftContractAddress )
+
+            let results = await StarflaskAPIHelper.resolveStarflaskQuery( FrontendConfig.tokenDataApiRoot+'/api/v1/apikey', {"requestType": "NFTTile_by_token_id", "input":{"collectionName":collectionName,"tokenId":  this.nftTokenId}  }    )
 
             console.log('fetchedTokenData',results )
 
-            let output = results.output[0]
+            let output = results.output
 
             if(output){
-              this.tokenOwnerAddress = output.accountAddress
+              this.tokenOwnerAddress = output.ownerPublicAddress
             }
             
 

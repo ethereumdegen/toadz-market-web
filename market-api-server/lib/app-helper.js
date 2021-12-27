@@ -6,7 +6,8 @@
     
       
 
-        static toChecksumAddress(address){            
+        static toChecksumAddress(address){  
+            if(!address)return address          
             return web3utils.toChecksumAddress(address)
         }
 

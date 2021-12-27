@@ -534,10 +534,15 @@ export default {
 
       async getBestSellOrder(allSellOrders){
 
+          let unexpiredOrders = allSellOrders 
 
-        let currentBlockNumber = await this.web3Plug.getBlockNumber()
-        let unexpiredOrders = allSellOrders.filter(x => x.expires > currentBlockNumber)
+        try{
+            let currentBlockNumber = await this.web3Plug.getBlockNumber()
 
+             unexpiredOrders = unexpiredOrders.filter(x => x.expires > currentBlockNumber)
+          }catch(e){
+              console.error('Could not get block number')
+          }
         
 
         if(unexpiredOrders.length > 0 ){

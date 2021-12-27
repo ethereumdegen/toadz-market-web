@@ -91,6 +91,7 @@ const MarketOrdersSchema = new Schema({
   }
  
 })
+ 
 
 const ERC721BalancesSchema = new Schema({
   contractAddress: {
@@ -108,6 +109,34 @@ const ERC721BalancesSchema = new Schema({
    
  
 })
+
+
+
+const ContractStateSchema = new Schema({
+  contractAddress: {
+    type: String, index: true
+  },
+  type: {
+    type: String
+  },
+
+  currentIndexingBlock: {
+    type: Number
+  },
+  stepSizeScaleFactor:{
+    type: Number
+  } ,
+  synced:{
+    type: Boolean
+  } ,
+  lastUpdated: {
+    type: Number
+  }
+   
+ 
+})
+
+
 
 
 const BurnedNoncesSchema = new Schema({
@@ -190,8 +219,11 @@ export default class MongoInterface  {
       const url = 'mongodb://' + host + ':' + port + '/' + dbName
       //await mongoose.connect(url, {})
 
+      mongoose.pluralize(null);
+
       this.connection = mongoose.createConnection(url, {} )
       console.log('connected to ', url, dbName)
+      
 
 
       await this.initModels()
@@ -216,7 +248,7 @@ export default class MongoInterface  {
         //PART OF VIBEGRAPH 
         this.erc721BalancesModel = this.connection.model('erc721_balances', ERC721BalancesSchema)
         
-        
+        this.contractStateModel = this.connection.model('contract_state', ContractStateSchema)
         this.burnedNoncesModel = this.connection.model('burned_nonces', BurnedNoncesSchema)
         //---
 

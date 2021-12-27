@@ -16,7 +16,7 @@
         }
 
         //http://localhost:3000/api/v1/somestuff
-        static async handleApiRequest(request, appId, wolfpackInterface, mongoInterface){
+        static async handleApiRequest(request, appId, vibegraphInterface, mongoInterface){
            
             let inputData = request.body 
             
@@ -36,6 +36,15 @@
 
                 return {success:true, input: inputParameters, output: results  }
             } 
+
+
+            if(inputData.requestType == 'get_vibegraph_status'){
+                let inputParameters = inputData.input
+   
+                let results = await APIHelper.getVibegraphStatus( vibegraphInterface)
+
+                return {success:true, input: inputParameters, output: results  }
+            }
 
 
             if(inputData.requestType == 'get_orders_for_token'){
@@ -73,7 +82,7 @@
                 let inputParameters = inputData.input
  
 
-                let results = await APIHelper.findAllERC721ByOwner(inputParameters.publicAddress, inputParameters.filterNFTcontracts  , wolfpackInterface)
+                let results = await APIHelper.findAllERC721ByOwner(inputParameters.publicAddress, inputParameters.filterNFTcontracts  , vibegraphInterface)
 
               
                 return {success:true, input: inputParameters, output: results  }
@@ -86,7 +95,7 @@
                 let inputParameters = inputData.input
  
 
-                let results = await APIHelper.findAllERC721ByContract(inputParameters.contractAddress , wolfpackInterface)
+                let results = await APIHelper.findAllERC721ByContract(inputParameters.contractAddress , vibegraphInterface)
 
               
                 return {success:true, input: inputParameters, output: results  }
@@ -96,7 +105,7 @@
  
                 let inputParameters = inputData.input
   
-                let results = await APIHelper.findAllERC721ByTokenId(inputParameters.contractAddress,inputParameters.tokenId , wolfpackInterface)
+                let results = await APIHelper.findAllERC721ByTokenId(inputParameters.contractAddress,inputParameters.tokenId , vibegraphInterface)
 
                 
                 return {success:true, input: inputParameters, output: results  }
@@ -218,6 +227,10 @@
 
 
 
+
+        static async getVibegraphStatus(vibegraphInterface){
+            return await vibegraphInterface.contractStateModel.find()
+        }
         //   add limits 
 
         static async findAllOrdersByToken(contractAddress, tokenId, mongoInterface){

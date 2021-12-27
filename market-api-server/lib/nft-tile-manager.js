@@ -117,13 +117,13 @@ export default class NFTTileManager  {
         
      
 
-      const STALE_TIME = 360*1000;
+      const STALE_TIME = 3*1000;
 
       let beforeTime = (Date.now() - STALE_TIME)
 
-      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne(  {$size:  {$not:0}, lastPolledAt:  {$not: {$gte: beforeTime }} })
+      let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne( {  tokenIds:{$not:  {$size:0}}, lastPolledAt:  {$not: {$gte: beforeTime }} })
       
-     // console.log(nextERC721Balance)
+       //console.log(nextERC721Balance)
         
       if(nextERC721Balance){ 
 

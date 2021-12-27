@@ -85,20 +85,18 @@ export default {
 
          let uri = FrontendConfig.marketApiRoot+'/api/v1/apikey'
           
-
-         
-
+ 
          let inputQuery = Object.assign( {collectionName: this.collectionName }, this.currentFilter   )
 
-
-          
-
+ 
          let result = await StarflaskApiHelper.resolveStarflaskQuery(uri,{"requestType": "NFTTiles_by_trait_value", "input": inputQuery})
+           
+           let input = result.input 
            let output = result.output 
 
          
  
-           if(output){
+           if(input && input.traitValue == this.currentFilter.traitValue && output){
                
               this.resultsDataArray = output
              

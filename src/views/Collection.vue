@@ -17,7 +17,7 @@
    <div class="section  border-b-2 border-black ">
      <div class=" container mb-16 margin-center">
       
-       <div class="grid grid-cols-4 gap-4 p-4 ">
+       <div class="grid md:grid-cols-4 gap-4 p-4 ">
  
 
           <div class="bg-gray-200 p-2 border-4 border-black text-gray-800" style="min-height:500px">
@@ -28,7 +28,7 @@
                 /> 
             
             </div>
-          <div class="col-span-3 p-2"> 
+          <div class="md:col-span-3 p-2"> 
             
             
                 <TiledTokenBrowser 

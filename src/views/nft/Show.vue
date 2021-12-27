@@ -20,7 +20,7 @@
      <div class=" container  margin-center">
 
      
-     <div class="grid grid-cols-3 gap-4 p-4  text-gray-800">
+     <div class="grid md:grid-cols-3 gap-4 p-4  text-gray-800">
         
        <div class=" ">
           <div class="m-4 p-4 border-2 border-gray-500" style="min-height:50px; "> 

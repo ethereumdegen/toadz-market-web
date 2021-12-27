@@ -19,7 +19,7 @@
 
      <div class=" container mb-16 margin-center">
       
-       <div class="grid grid-flow-col mt-32">
+       <div class="grid md:grid-flow-col mt-32">
 
          
 
@@ -47,18 +47,14 @@
 
          </div>
 
+ 
+         <div class="   column-2 w-col w-col-6 text-center ">
 
-
-
-
-
-         <div class="column-2 w-col w-col-6  ">
-
-              <div class="py-32" style="width:50%"> 
+              <div class="py-32 " style="width:50%; margin: 0 auto;"> 
               
-              <img src="@/assets/images/swampz.png" width="300"  /> 
-           
-              <FrontPageMedia />
+                  <img src="@/assets/images/swampz.png" width="300"  /> 
+              
+                  <FrontPageMedia />
               </div>
  
          </div>

@@ -113,7 +113,7 @@ export default class NFTTileManager  {
         
      
 
-      const STALE_TIME = 60*1000;
+      const STALE_TIME = 360*1000;
 
       let nextERC721Balance = await this.vibegraphInterface.erc721BalancesModel.findOne({lastPolledAt:  {$not: {$gte:Date.now() - STALE_TIME }} })
       

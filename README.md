@@ -26,3 +26,7 @@ npm run build
 npm run server
 ```
  
+ ### Start with pm2 
+ pm2 start pm2.config.json --env production 
+
+

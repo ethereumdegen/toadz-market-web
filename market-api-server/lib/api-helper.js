@@ -5,9 +5,12 @@
     import EIP712Utils from '../../src/js/EIP712Utils.js'
  
     import AppHelper from './app-helper.js'
-    //import ApplicationManager from './application-manager.js'
-    
  
+    
+    //weth and ether 
+    const supportedCurrenciesArray = ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2","0xDf032Bc4B9dC2782Bb09352007D4C57B75160B15","0x0000000000000000000000000000000000000010"] 
+
+
     export default class APIHelper  {
     
         constructor(   ){
@@ -26,7 +29,10 @@
                 let inputParameters = inputData.input
    
                 let results = await APIHelper.findRecentActivity(inputParameters.filterCollections, mongoInterface)
- 
+                
+
+                results.latestBlockNumber = await APIHelper.getCurrentBlockNumber(mongoInterface)
+
                 return {success:true, input: inputParameters, output: results  }
             } 
 
@@ -36,7 +42,9 @@
                 let inputParameters = inputData.input
    
                 let results = await APIHelper.findPersonalActivity(inputParameters.publicAddress , inputParameters.filterCollections, mongoInterface)
- 
+                
+                results.latestBlockNumber = await APIHelper.getCurrentBlockNumber(mongoInterface)
+
                 return {success:true, input: inputParameters, output: results  }
             } 
 
@@ -278,7 +286,9 @@
         static async findAllOrdersByToken(contractAddress, tokenId, mongoInterface){
             contractAddress = AppHelper.toChecksumAddress(contractAddress)
             tokenId = parseInt(tokenId)
-            return await mongoInterface.marketOrdersModel.find({nftContractAddress: contractAddress, nftTokenId:tokenId, status: "valid"   })
+
+            
+            return await mongoInterface.marketOrdersModel.find({nftContractAddress: contractAddress, nftTokenId:tokenId, status: "valid" , currencyTokenAddress: {$in: supportedCurrenciesArray}  })
         }
 
         static async findAllOrdersByTokenRange(contractAddress, tokenIdMin, tokenIdMax, mongoInterface){
@@ -485,6 +495,13 @@
             let endIndex = startIndex+maxItemsPerPage
 
             return {startIndex,endIndex}
+        }
+
+        static async getCurrentBlockNumber(mongoInterface){
+
+            let serverData = await mongoInterface.serverDataModel.findOne()
+
+            return serverData.latestBlockNumber
         }
 
 

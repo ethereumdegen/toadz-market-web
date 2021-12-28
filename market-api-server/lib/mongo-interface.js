@@ -5,6 +5,16 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema;
  
+
+const ServerDataSchema = new Schema({
+
+  latestBlockNumber: {
+    type: Number 
+  },
+
+
+})
+
  
 const TraitSchema = new Schema({
   collectionName: {
@@ -261,7 +271,9 @@ export default class MongoInterface  {
     async initModels(){
 
 
-        // PART OF Toadz 
+        // PART OF Toadz  
+        this.serverDataModel = this.connection.model('server_data', ServerDataSchema)
+
         this.traitsModel = this.connection.model('nft_traits', TraitSchema)
       
         this.marketOrdersModel = this.connection.model('market_orders', MarketOrdersSchema)

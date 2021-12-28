@@ -39,7 +39,7 @@
             <div  class="mb-4 ">
 
               <GenericTable
-                v-bind:labelsArray="['','Collection Name','Token Id','Buyout' ]"
+                v-bind:labelsArray="['','Collection Name','Token Id','Buyout', 'Expires' ]"
                 v-bind:rowsArray="recentOffersArray"
                 v-bind:clickedRowCallback="clickedRowCallback"
                 
@@ -62,7 +62,7 @@
             <div class="mb-4 ">
 
               <GenericTable
-                 v-bind:labelsArray="['','Collection Name','Token Id','Bid Amount' ]"
+                 v-bind:labelsArray="['','Collection Name','Token Id','Bid Amount', 'Expires' ]"
                 v-bind:rowsArray="recentBidsArray"
                   v-bind:clickedRowCallback="clickedRowCallback"
                />
@@ -174,16 +174,18 @@ export default {
               let decimals = 18 
               let currencyAmountFormatted = MathHelper.rawAmountToFormatted(result.currencyTokenAmount,decimals)
                 currencyAmountFormatted = MathHelper.formatFloat(currencyAmountFormatted)
-               currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
+                currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
 
-               let iconURL =  AssetDataHelper.getImageURL(collectionName,result.nftTokenId) 
+               let iconURL = AssetDataHelper.getImageURL(collectionName,result.nftTokenId) 
+
+                let latestBlockNumber = results.output.latestBlockNumber
 
                 let row = { 
                   icon: iconURL,
                   collectionName: collectionName, 
                   tokenId: result.nftTokenId , 
                   currencyAmountFormatted:  (currencyAmountFormatted),
-
+                  expires: MathHelper.expirationTimeFormatted( latestBlockNumber, result.expires  )
                 }  
 
                 if(result.isSellOrder){

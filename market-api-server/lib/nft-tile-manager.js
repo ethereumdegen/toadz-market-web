@@ -40,14 +40,7 @@ export default class NFTTileManager  {
     async init(){
         this.chainId =  this.serverConfig.chainId //await Web3Helper.getNetworkId(this.web3);
         await this.updateBlockNumber()
-       // await this.initializeCachedNFTTiles()
        
-       
-       /* setInterval(this.updatePackets.bind(this),1000)
-        setInterval(this.updateBidders.bind(this),1000)
-
-        this.updateNetData()
-        setInterval(this.updateNetData.bind(this),30*1000)*/
 
         setInterval(this.updateBlockNumber.bind(this),60*1000)
 
@@ -56,16 +49,12 @@ export default class NFTTileManager  {
     }
 
     async startPolling(){
-
-      
-      //while(this.pollERC721Balances){
-          this.pollNextERC721Balance()
-     // }
-
-      //while(this.pollMarketOrders){
+ 
+ 
+          this.pollNextERC721Balance() 
       
           this.pollNextMarketOrder()
-      //}
+      
 
      
     }
@@ -77,6 +66,11 @@ export default class NFTTileManager  {
       }catch(e){
           console.error(e)
       }
+
+      if(this.blockNumber){
+        await this.mongoInterface.serverDataModel.findOneAndUpdate({ }, {latestBlockNumber: this.blockNumber}, {upsert:true})
+      }
+     
 
   }
 
@@ -136,13 +130,11 @@ export default class NFTTileManager  {
          setTimeout( this.pollNextERC721Balance.bind(this), 10)
 
       }else{
-        //none found 
-        //return
+        
 
         setTimeout( this.pollNextERC721Balance.bind(this), 200)
       }
-
-     // setTimeout( this.pollNextERC721Balance.bind(this), 10)
+ 
 
   }
 

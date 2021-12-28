@@ -21,4 +21,27 @@ static formattedAmountToRaw(amountFormatted,decimals)
 static formatFloat(f){
   return parseFloat(parseFloat(f).toFixed(3))
 }
+
+static expirationTimeFormatted(currentBlock, expirationBlock){
+  let blockDelta = expirationBlock - currentBlock
+
+  //let timeEstimateSeconds = blockDelta * 15 
+  let days = MathHelper.getDaysFromBlocks(blockDelta)
+
+  if(days < 30){
+    return days.toString().concat(' days')
+  }else{
+    return Math.ceil(days/30).toString().concat(' months')
+  }
+  
+}
+
+
+
+static getDaysFromBlocks(blocks){
+  return parseFloat(blocks / 5760).toFixed(2)
+} 
+
+
+
 }

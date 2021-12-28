@@ -78,7 +78,7 @@
            <div class="py-2" v-if="ownedByLocalUser()">
 
                 <div v-if="bestSellOrder " class='my-2'>
-                    <div class="p-2 border-2 border-black inline-block rounded bg-gray-700 text-white hover:bg-gray-600  select-none"  > For Sale: {{ getBuyoutPrice() }} ETH </div>
+                    <div class="p-2 border-2 border-black inline-block rounded bg-gray-700 text-white hover:bg-gray-600  select-none"  > For Sale: <span class="wide-letters">{{ getBuyoutPrice() }}</span> ETH </div>
           
                   
                  </div>

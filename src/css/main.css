@@ -40,6 +40,10 @@ body {
   font-family: "Arial"  ;
 }
 
+.wide-letters{
+  letter-spacing: 3px;
+}
+
 
 .loader {
   border: 3px solid #f3f3f3; /* Light grey */

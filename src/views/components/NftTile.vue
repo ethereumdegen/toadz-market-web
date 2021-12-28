@@ -30,6 +30,8 @@
 
 import MathHelper from '../../js/math-helper.js'
 
+import AssetDataHelper from '../../js/asset-data-helper.js'
+
 export default {
   name: 'NftTile',
   props: ['collectionName',  'nftTokenId', 'nftData'],
@@ -60,19 +62,14 @@ export default {
         return `/collection/${this.collectionName}/${this.nftTokenId}` 
       },
 
+
+
       getImageURL(){
 
-        let folderName = this.getImageFolderNameFromCollectionName(this.collectionName)
-
-        return `/images/${folderName}/${this.nftTokenId}.jpg` 
+        return AssetDataHelper.getImageURL(this.collectionName,this.nftTokenId) 
 
       },
-
-      getImageFolderNameFromCollectionName(cName){
-        if( cName && cName.toLowerCase() == 'cryptoflyz' ) return 'flyz'
-
-        return 'toadz'
-      },
+ 
 
       getOwnerName(){
 

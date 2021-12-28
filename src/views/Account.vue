@@ -99,7 +99,7 @@
             <div  class="mb-4 ">
 
               <GenericTable
-                v-bind:labelsArray="['Collection Name','Token Id','Bid Amount' ]"
+                v-bind:labelsArray="['','Collection Name','Token Id','Bid Amount' ]"
                 v-bind:rowsArray="personalBidOrders"
                 v-bind:clickedRowCallback="clickedRowCallback"
                 
@@ -122,7 +122,7 @@
             <div class="mb-4 ">
 
               <GenericTable
-                 v-bind:labelsArray="['Collection Name','Token Id','Buyout' ]"
+                 v-bind:labelsArray="['','Collection Name','Token Id','Buyout' ]"
                 v-bind:rowsArray="personalSellOrders"
                   v-bind:clickedRowCallback="clickedRowCallback"
                />
@@ -273,10 +273,7 @@ export default {
 
           async fetchOwnedTokens(){
 
-            //if(!this.activeNetworkId) this.activeNetworkId = 1;
-
-            //let contractData = this.web3Plug.getContractDataForNetworkID(this.activeNetworkId)
- 
+           
    
             let filterNFTcontracts  = ['Cryptoadz','Cryptoflyz'] 
 
@@ -317,8 +314,7 @@ export default {
 
             this.personalSellOrders = []
             this.personalBidOrders = []
-
-            
+ 
  
 
             for(let result of results.output.recentOrders){ 
@@ -331,7 +327,11 @@ export default {
                currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
 
 
+                 let iconURL =  AssetDataHelper.getImageURL(collectionName,result.nftTokenId) 
+
+
                 let row = { 
+                  icon: iconURL,
                   collectionName: collectionName, 
                   tokenId: result.nftTokenId , 
                   currencyAmountFormatted:  (currencyAmountFormatted),

@@ -17,6 +17,8 @@
          <UpperNav
           v-bind:web3Plug="web3Plug"
           />
+
+          <div v-if="hasIncorrectNetworkId()" class="  text-center bg-gray-600 text-yellow-400 font-boring">  Please switch to the {{getPrimaryNetworkName()}} network </div>
        </div>
 
 
@@ -49,6 +51,9 @@
 <script>
 import UpperNav from './UpperNav.vue';
 import AccordionNav from './AccordionNav.vue';
+
+import FrontendHelper from '../../js/frontend-helper.js';
+
 export default {
   name: 'Navbar',
   props: ['web3Plug'],
@@ -58,7 +63,30 @@ export default {
       showResponsiveMenu: false,
     }
   },
+  mounted(){
+
+
+
+  },
   methods: {
+
+    hasIncorrectNetworkId(){
+
+      let activeNetworkId = this.web3Plug.getActiveNetId() 
+      if(activeNetworkId && activeNetworkId != FrontendHelper.getNetworkIdForEnv()){
+
+        return true 
+      }
+
+      return false 
+
+    },
+
+    getPrimaryNetworkName( ){
+      return FrontendHelper.getNetworkNameForEnv()
+    }
+
+
   }
 }
 </script>

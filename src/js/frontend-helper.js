@@ -2,6 +2,8 @@
 
 
 
+ 
+
 
 export default class FrontendHelper {
 
@@ -17,6 +19,30 @@ export default class FrontendHelper {
     }
 
     return null
+  }
+
+  static envName(){
+
+    return process.env.NODE_ENV
+  }
+
+  static getNetworkNameForEnv(){
+
+    let envmode = FrontendHelper.envName()
+
+    if(envmode == 'production') return 'mainnet'
+
+    return 'rinkeby'
+  }
+
+
+  static getNetworkIdForEnv(){
+
+    let envmode = FrontendHelper.envName()
+
+    if(envmode == 'production') return 1
+
+    return 4
   }
 
   

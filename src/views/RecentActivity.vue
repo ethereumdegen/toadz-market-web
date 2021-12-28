@@ -39,7 +39,7 @@
             <div  class="mb-4 ">
 
               <GenericTable
-                v-bind:labelsArray="['Collection Name','Token Id','Buyout' ]"
+                v-bind:labelsArray="['','Collection Name','Token Id','Buyout' ]"
                 v-bind:rowsArray="recentOffersArray"
                 v-bind:clickedRowCallback="clickedRowCallback"
                 
@@ -62,7 +62,7 @@
             <div class="mb-4 ">
 
               <GenericTable
-                 v-bind:labelsArray="['Collection Name','Token Id','Bid Amount' ]"
+                 v-bind:labelsArray="['','Collection Name','Token Id','Bid Amount' ]"
                 v-bind:rowsArray="recentBidsArray"
                   v-bind:clickedRowCallback="clickedRowCallback"
                />
@@ -176,8 +176,10 @@ export default {
                 currencyAmountFormatted = MathHelper.formatFloat(currencyAmountFormatted)
                currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
 
+               let iconURL =  AssetDataHelper.getImageURL(collectionName,result.nftTokenId) 
 
                 let row = { 
+                  icon: iconURL,
                   collectionName: collectionName, 
                   tokenId: result.nftTokenId , 
                   currencyAmountFormatted:  (currencyAmountFormatted),

@@ -10,7 +10,13 @@
           <tbody v-cloak class="font-boring">
             <tr v-for="row of rowsArray" class="hover:bg-teal-200 cursor-pointer" @click="clickedRow(row)">
                
-              <td v-for="(label, index) in labelsArray" >{{Object.values(row)[index]}}</td>
+              <td v-for="(label, index) in labelsArray" class="py-2">
+
+                <img v-if="Object.keys(row)[index] == 'icon'" v-bind:src="Object.values(row)[index]" style="width:36px"/>   
+
+                <span v-if="Object.keys(row)[index] != 'icon'">{{Object.values(row)[index]}}</span>
+                
+              </td>
               
             </tr>
              

@@ -303,27 +303,19 @@ export default {
   }, 
   methods: {
               
-      getLinkUrl(){
-
-        //return `https://artblocks.io/token/${this.nftTokenId}.png` 
-        return `/collection/${this.nftContractAddress}/${this.nftTokenId}` 
+      getLinkUrl(){ 
+         
+        return `/collection/${this.collectionName}/${this.nftTokenId}` 
       },
 
      
-        getImageURL(){
-
-        let folderName = this.getImageFolderNameFromCollectionName(this.collectionName)
-
-        return `/images/${folderName}/${this.nftTokenId}.jpg` 
-
+      getImageURL(){
+ 
+        return AssetDataHelper.getImageURL(this.collectionName,this.nftTokenId) 
+ 
       },
 
-      getImageFolderNameFromCollectionName(cName){
-        if( cName && cName.toLowerCase() == 'cryptoflyz' ) return 'flyz'
-
-        return 'toadz'
-      },
-
+       
 
       getAssetName(){
         //make this come from a giant config file that uses contract address and token id to look up 

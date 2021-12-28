@@ -46,17 +46,20 @@ export default class AssetDataHelper {
   
       }
 
-    /*  static getProjectNameForProjectId( projectId   )
+   static getImageURL( collectionName,tokenId   )
   {
 
-        let projectName = abProjectLookup[projectId]
-        
-        if(projectName){
-            return projectName 
-        }
+    let folderName = AssetDataHelper.getImageFolderNameFromCollectionName( collectionName )
 
-        return 'Unknown'    
-  }*/
+    return `/images/${folderName}/${tokenId}.jpg` 
+
+  }  
+
+  static getImageFolderNameFromCollectionName(cName){
+    if( cName && cName.toLowerCase() == 'cryptoflyz' ) return 'flyz'
+
+    return 'toadz'
+  } 
 
   static getProjectNameForAsset( contractAddress, tokenId   )
   {

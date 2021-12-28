@@ -198,7 +198,7 @@ export default {
           async clickedRowCallback(row){
             console.log('clicked,',row)
 
-             this.$router.push(`collection/${row.collectionName}/${row.tokenId}`)
+             this.$router.push(`/collection/${row.collectionName}/${row.tokenId}`)
           }
         
 

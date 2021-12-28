@@ -29,6 +29,18 @@
  
                 return {success:true, input: inputParameters, output: results  }
             } 
+
+
+            if(inputData.requestType == 'personal_activity'){
+ 
+                let inputParameters = inputData.input
+   
+                let results = await APIHelper.findPersonalActivity(inputParameters.publicAddress , inputParameters.filterCollections, mongoInterface)
+ 
+                return {success:true, input: inputParameters, output: results  }
+            } 
+
+            
             
 
             //save a new buy or sell order to the server 
@@ -232,10 +244,11 @@
                 currencyTokenAmount:  (inputParameters.currencyTokenAmount).toString(),
                 nonce: inputParameters.nonce.toString(),
                 expires: parseInt(inputParameters.expires),
-                signature: inputParameters.signature.toString(),
-                
-                createdAt: Date.now()
+                signature: inputParameters.signature.toString()            
             } 
+
+            newOrderData.createdAt = Date.now()
+            newOrderData.combinedAssetId = AppHelper.getCombinedAssetId( newOrderData.nftContractAddress, newOrderData.nftTokenId  )
 
             //check the signature for validity here 
 
@@ -347,9 +360,55 @@
             let ONE_DAY =24*60*60*1000
             let RECENT_TIME = Date.now() - ONE_DAY 
 
-            let allOrders = await mongoInterface.marketOrdersModel.find({nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })
+            let allOrders = await mongoInterface.marketOrdersModel
+            .find({nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
 
             return {recentOrders: allOrders}
+        }
+
+
+        static async findPersonalActivity(publicAddress, filterCollections, mongoInterface){
+            
+            publicAddress = AppHelper.toChecksumAddress(publicAddress)
+            
+            let filterContractAddresses = filterCollections.map(name =>  AppHelper.contractCollectionNameToContractAddress(name))
+            filterContractAddresses = filterContractAddresses.map(address => AppHelper.toChecksumAddress(address))
+
+            let ONE_MONTH = 30*24*60*60*1000
+            let RECENT_TIME = Date.now() - ONE_MONTH 
+
+            let personalSellOrders = await mongoInterface.marketOrdersModel
+            .find({status:'valid', isSellOrder:true, orderCreator:publicAddress,nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
+
+
+
+
+            let ownedAssetIds = await APIHelper.getAllOwnedAssetIds( publicAddress,mongoInterface )
+
+
+            let personalBidOrders = await mongoInterface.marketOrdersModel
+            .find({status:'valid', isSellOrder:false, combinedAssetId: {$in: ownedAssetIds}  , createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
+
+            return {recentOrders: personalSellOrders.concat(personalBidOrders)   }
+        }
+
+
+        static async getAllOwnedAssetIds( publicAddress, mongoInterface  ){
+
+            let nftTiles = await mongoInterface.cachedNFTTileModel.find({
+                ownerPublicAddress: publicAddress
+            })
+
+
+            let combinedAssetIds = nftTiles.map(tile => tile.combinedAssetId )
+
+            return combinedAssetIds
         }
 
         static async findNFTTileByTokenId(collectionName,tokenId,mongoInterface){

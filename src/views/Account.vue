@@ -78,31 +78,63 @@
 
 
 
+        <hr class="my-8"> 
 
-       <div class="w-column hidden "  v-if=" connectedToWeb3">
-          <div class="text-lg font-bold"> Your Active Bids  </div>
-          
+
+       <div class="w-column  "  >
+
+          <div class="w-column text-center py-8 hidden"   >
+             <div class="text-lg font-bold text-black"> Personal Activity </div>
+ 
          
+          </div>
 
-          <div  class=" "  >
-
-             
+         <div class="w-column  mb-16 " v-if="personalBidOrders && personalBidOrders.length>0" >
+          <div class="text-lg font-bold text-green-600"> Active Offers  </div>
+          
+           
+          <div  class=" "  > 
             
 
-            <div v-if="selectedTab=='bids'" class="mb-4 ">
+            <div  class="mb-4 ">
 
               <GenericTable
-                v-bind:labelsArray="['nftType','currencyType','bidAmount','expires']"
-                v-bind:rowsArray="activeBidRowsArray"
+                v-bind:labelsArray="['Collection Name','Token Id','Buyout' ]"
+                v-bind:rowsArray="personalBidOrders"
+                v-bind:clickedRowCallback="clickedRowCallback"
                 
                />
 
            </div>
 
 
-          </div>
+          </div> 
+       </div>
 
 
+       <div class="w-column mb-16  "   v-if="personalSellOrders && personalSellOrders.length>0" >
+          <div class="text-lg font-bold text-green-600" > Open Sell Orders  </div>
+          
+           
+          <div  class=" "  > 
+            
+
+            <div class="mb-4 ">
+
+              <GenericTable
+                 v-bind:labelsArray="['Collection Name','Token Id','Bid Amount' ]"
+                v-bind:rowsArray="personalSellOrders"
+                  v-bind:clickedRowCallback="clickedRowCallback"
+               />
+
+
+           </div>
+
+
+          </div> 
+       </div>
+
+       
           
        </div>
 
@@ -140,7 +172,7 @@ import GenericTable from './components/GenericTable.vue';
 
 //import BidPacketHelper from '../js/bidpacket-helper.js'
  
-//import BuyTheFloorHelper from '../js/buythefloor-helper.js'
+ import MathHelper from '../js/math-helper.js'
 
 
 const envName = process.env.NODE_ENV
@@ -171,7 +203,10 @@ export default {
       allOwnedNFTs:[ ],
        
       connectedToWeb3: false,
-      currentBlockNumber: 0
+      currentBlockNumber: 0,
+
+      personalBidOrders: [],
+      personalSellOrders: []
     }
   },
   watch: {
@@ -188,6 +223,8 @@ export default {
      this.reconnectWeb3()
 
       this.fetchOwnedTokens()
+
+      this.fetchPersonalActivity()
    
   }, 
    beforeDestroy(){
@@ -262,62 +299,64 @@ export default {
 
           },
 
-         /* async fetchBidsData(){
-             var hostname = window.location.hostname; 
+          async fetchPersonalActivity(){
 
-                 
-            let serverURL = BuyTheFloorHelper.getSocketURL(this.web3Plug.getActiveNetId())  
-            console.log('serverURL',serverURL)
+            this.personalOrdersArray = []
 
-            let contractData = this.web3Plug.getContractDataForActiveNetwork()
-
-            if(!contractData)return; 
-            let btfContractAddress = contractData['buythefloor'].address
-
-
-            let query = {bidderAddress: this.web3Plug.getActiveAccountAddress() , exchangeContractAddress: btfContractAddress }
-
-            let bidPackets = await BidPacketHelper.getBidPackets(serverURL,query)
-            console.log('bidPackets',bidPackets)
-
-           
-            let chainId = this.web3Plug.getActiveNetId()
-
-
-          this.activeBidRowsArray=[]
-          this.inactiveBidRowsArray=[]
-            for(let packet of bidPackets){
-
-              if(packet.status == 'active' && packet.suspended == false){
-                  this.activeBidRowsArray.push(this.getBidRowFromPacket(packet,chainId))
-              }else{
-                 this.inactiveBidRowsArray.push(this.getBidRowFromPacket(packet,chainId))
-              }
-
-            }
             
+            let filterCollections  = ['Cryptoadz','Cryptoflyz'] 
 
+            let inputRequest = { "publicAddress": this.profileAccountAddress, "filterCollections": filterCollections  } 
+ 
+            let results = await StarflaskAPIHelper.resolveStarflaskQuery( 
+               FrontendConfig.tokenDataApiRoot+ '/api/v1/apikey',             
+            {"requestType": "personal_activity",
+             "input":inputRequest }   )
+
+            console.log('findPersonalActivity',results )
+
+            this.personalSellOrders = []
+            this.personalBidOrders = []
+
+            
+ 
+
+            for(let result of results.output.recentOrders){ 
+
+              let collectionName = AssetDataHelper.getCollectionNameForAsset( result.nftContractAddress )
+
+              let decimals = 18 
+              let currencyAmountFormatted = MathHelper.rawAmountToFormatted(result.currencyTokenAmount,decimals)
+                currencyAmountFormatted = MathHelper.formatFloat(currencyAmountFormatted)
+               currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
+
+
+                let row = { 
+                  collectionName: collectionName, 
+                  tokenId: result.nftTokenId , 
+                  currencyAmountFormatted:  (currencyAmountFormatted),
+
+                }  
+
+                if(result.isSellOrder){
+                  this.personalSellOrders.push(row)
+                }else{
+                  this.personalBidOrders.push(row)
+                }
+                
+              
+            }
             
           },
 
-          getBidRowFromPacket(pkt,chainId){ 
-            
-            return{
-                  nftContractAddress: BuyTheFloorHelper.getNameFromContractAddress(pkt.nftContractAddress,pkt.projectId,chainId),
-                  currencyTokenAddress: BuyTheFloorHelper.getNameFromContractAddress(pkt.currencyTokenAddress,0,chainId),
-                  currencyTokenAmount: BuyTheFloorHelper.getFormattedCurrencyAmount(pkt.currencyTokenAmount,pkt.currencyTokenAddress, chainId) ,
-                  expires: pkt.expires,
-                  signature: pkt.signature.signature,
-                  suspended: pkt.suspended,
-                  status: pkt.status
-                } 
-                                                      
 
-          },*/
+           async clickedRowCallback(row){
+            console.log('clicked,',row)
 
+             this.$router.push(`/collection/${row.collectionName}/${row.tokenId}`)
+          },
+        
 
-           
-          
           clickedTileCallback(row){
             console.log('clicked  ',row )
 

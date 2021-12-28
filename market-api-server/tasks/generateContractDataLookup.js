@@ -41,6 +41,7 @@ static async runTask( ){
    
 
    fs.writeFileSync( path.join ( "./src/config/generated/contractlookup.json" ) , JSON.stringify( dataLookup ) );
+   fs.writeFileSync( path.join ( "./market-api-server/config/generated/contractlookup.json" ) , JSON.stringify( dataLookup ) );
   
    console.log(`generateAssetDataLookup: task complete.`) 
      

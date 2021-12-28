@@ -32,7 +32,12 @@ const TraitSchema = new Schema({
 
 
 const CachedNFTTileSchema = new Schema({
+  
   collectionName: {
+    type: String, index: true
+  },
+
+  contractAddress: {
     type: String, index: true
   },
   /*traitIds: {  //points at traits 
@@ -52,7 +57,11 @@ const CachedNFTTileSchema = new Schema({
   },
   buyoutPriceFromOrderId: {
     type: String
-  }
+  },
+
+  combinedAssetId:{
+    type: String, index: true, unique:true 
+  },
  
 })
 
@@ -73,10 +82,10 @@ const MarketOrdersSchema = new Schema({
     type: Boolean
   },
   nftContractAddress: {
-    type: String
+    type: String, index: true
   },
   nftTokenId: {
-    type: Number
+    type: Number, index: true
   },
   currencyTokenAddress: {
     type: String
@@ -98,12 +107,17 @@ const MarketOrdersSchema = new Schema({
     type: Number
   },
   status:{
-    type: String
+    type: String, index: true
   },
   
   createdAt:{
     type: Number
-  }
+  },
+
+  //contract address + token id 
+  combinedAssetId:{
+    type: String, index: true
+  },
  
 })
  

@@ -99,7 +99,7 @@
             <div  class="mb-4 ">
 
               <GenericTable
-                v-bind:labelsArray="['Collection Name','Token Id','Buyout' ]"
+                v-bind:labelsArray="['Collection Name','Token Id','Bid Amount' ]"
                 v-bind:rowsArray="personalBidOrders"
                 v-bind:clickedRowCallback="clickedRowCallback"
                 
@@ -122,7 +122,7 @@
             <div class="mb-4 ">
 
               <GenericTable
-                 v-bind:labelsArray="['Collection Name','Token Id','Bid Amount' ]"
+                 v-bind:labelsArray="['Collection Name','Token Id','Buyout' ]"
                 v-bind:rowsArray="personalSellOrders"
                   v-bind:clickedRowCallback="clickedRowCallback"
                />

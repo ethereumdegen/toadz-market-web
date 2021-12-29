@@ -78,7 +78,7 @@ export default class NFTTileManager  {
     async pollNextMarketOrder( ){
         
       
-        const STALE_TIME = 360 * 1000;
+        const STALE_TIME = 360  * 1000;
 
         let nextMarketOrder = await this.mongoInterface.marketOrdersModel.findOne({lastPolledAt: {$not: {$gte: (Date.now() - STALE_TIME) }}  })
 
@@ -229,15 +229,19 @@ export default class NFTTileManager  {
         }
         
 
-      }else{
-       // let buyoutPriceWasFromStaleOrder = false 
+      }else{ 
+          
+          
+      
         if(matchingNFTTile.buyoutPriceFromOrderId && AppHelper.mongoIdToNumber(marketOrder._id) == matchingNFTTile.buyoutPriceFromOrderId){
-        
-          //if(!orderThatEstablishedBuyoutPrice){
+          
 
-          //buyout price was from stale order so we clear the buyout price 
-            await this.mongoInterface.cachedNFTTileModel.updateOne({_id: matchingNFTTile._id}, {lowestBuyoutPriceWei: undefined, buyoutPriceFromOrderId:undefined})
-         // } 
+          
+
+             await this.mongoInterface.cachedNFTTileModel.findOneAndUpdate({_id: matchingNFTTile._id},   {lowestBuyoutPriceWei: null, buyoutPriceFromOrderId:null} )
+          
+             
+
         }
 
       

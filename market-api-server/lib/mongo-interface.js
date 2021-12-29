@@ -130,7 +130,30 @@ const MarketOrdersSchema = new Schema({
   },
  
 })
- 
+
+const NFTSalesSchema = new Schema({
+  sellerAddress: {
+    type: String 
+  },
+  buyerAddress: {
+    type: String 
+  },
+  nftContractAddress: {
+    type: String 
+  },
+  nftTokenId: {
+    type: Number 
+  },
+  currencyTokenAddress: {
+    type: String 
+  },
+  currencyTokenAmount: {
+    type: Number 
+  },
+  createdAt: {
+    type: Number 
+  }
+})
 
 const ERC721BalancesSchema = new Schema({
   contractAddress: {
@@ -288,7 +311,9 @@ export default class MongoInterface  {
 
         //PART OF VIBEGRAPH 
         this.erc721BalancesModel = this.connection.model('erc721_balances', ERC721BalancesSchema)
-        
+
+        this.nftSalesModel = this.connection.model('nft_sale', NFTSalesSchema)
+
         this.contractStateModel = this.connection.model('contract_state', ContractStateSchema)
         this.burnedNoncesModel = this.connection.model('burned_nonces', BurnedNoncesSchema)
         //---

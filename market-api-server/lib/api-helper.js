@@ -36,12 +36,35 @@
                 return {success:true, input: inputParameters, output: results  }
             } 
 
+            if(inputData.requestType == 'recent_sales_history'){
+ 
+                let inputParameters = inputData.input
+   
+                let results = await APIHelper.findRecentSalesHistory(inputParameters.filterCollections, vibegraphInterface)
+                 
+                results.latestBlockNumber = await APIHelper.getCurrentBlockNumber(mongoInterface)
+
+                return {success:true, input: inputParameters, output: results  }
+            } 
+
+            if(inputData.requestType == 'recent_personal_sales_history'){
+ 
+                let inputParameters = inputData.input
+   
+                let results = await APIHelper.findRecentPersonalSalesHistory(inputParameters.publicAddress, inputParameters.filterCollections, vibegraphInterface)
+                 
+                results.latestBlockNumber = await APIHelper.getCurrentBlockNumber(mongoInterface)
+
+                return {success:true, input: inputParameters, output: results  }
+            }  
+            
+
 
             if(inputData.requestType == 'personal_activity'){
  
                 let inputParameters = inputData.input
    
-                let results = await APIHelper.findPersonalActivity(inputParameters.publicAddress , inputParameters.filterCollections, mongoInterface)
+                let results = await APIHelper.findPersonalActivity(inputParameters.publicAddress, inputParameters.filterCollections, mongoInterface)
                 
                 results.latestBlockNumber = await APIHelper.getCurrentBlockNumber(mongoInterface)
 
@@ -287,8 +310,13 @@
             contractAddress = AppHelper.toChecksumAddress(contractAddress)
             tokenId = parseInt(tokenId)
 
-            
-            return await mongoInterface.marketOrdersModel.find({nftContractAddress: contractAddress, nftTokenId:tokenId, status: "valid" , currencyTokenAddress: {$in: supportedCurrenciesArray}  })
+            //filters by those with ETH as money only 
+            return await mongoInterface.marketOrdersModel.find({
+                nftContractAddress: contractAddress, 
+                nftTokenId:tokenId, 
+                status: "valid" , 
+                currencyTokenAddress: {$in: supportedCurrenciesArray}  
+            })
         }
 
         static async findAllOrdersByTokenRange(contractAddress, tokenIdMin, tokenIdMax, mongoInterface){
@@ -361,7 +389,44 @@
              
         }
 
+        static async findRecentSalesHistory(filterCollections, vibegraphInterface){
 
+            let filterContractAddresses = filterCollections.map(name =>  AppHelper.contractCollectionNameToContractAddress(name))
+            filterContractAddresses = filterContractAddresses.map(address => AppHelper.toChecksumAddress(address))
+
+            let ONE_DAY =24*60*60*1000
+            let RECENT_TIME = Date.now() - ONE_DAY 
+
+            let allSales = await vibegraphInterface.nftSalesModel
+            .find({nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
+
+            return {recentSales: allSales} 
+        }
+
+        static async findRecentPersonalSalesHistory(publicAddress, filterCollections, vibegraphInterface){
+
+            publicAddress = AppHelper.toChecksumAddress(publicAddress)
+
+            let filterContractAddresses = filterCollections.map(name =>  AppHelper.contractCollectionNameToContractAddress(name))
+            filterContractAddresses = filterContractAddresses.map(address => AppHelper.toChecksumAddress(address))
+
+            let ONE_MONTH = 30*24*60*60*1000
+            let RECENT_TIME = Date.now() - ONE_MONTH 
+
+            let allSalesFrom = await vibegraphInterface.nftSalesModel
+            .find({nftContractAddress: {$in: filterContractAddresses}, sellerAddress: publicAddress, createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
+
+            let allSalesTo = await vibegraphInterface.nftSalesModel
+            .find({nftContractAddress: {$in: filterContractAddresses}, buyerAddress: publicAddress, createdAt: {$gte: RECENT_TIME} })
+            .sort({'createdAt': -1}) //sort DESC 
+            .limit(100)
+
+            return {recentSales: allSalesFrom.concat(allSalesTo)} 
+        }
 
         static async findRecentActivity(filterCollections, mongoInterface){
             let filterContractAddresses = filterCollections.map(name =>  AppHelper.contractCollectionNameToContractAddress(name))

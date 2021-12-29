@@ -27,10 +27,35 @@
          
        </div>
 
-  
+
+
+      <div class="w-column mb-16  "  >
+          <div class="text-lg font-bold text-green-600" > Recent Sales  </div>
+          
+           
+          <div  class=" "  > 
+            
+
+            <div class="mb-4 ">
+
+              <GenericTable
+                 v-bind:labelsArray="['','Collection Name','Token Id','Sale Amount', '' ]"
+                  v-bind:rowsArray="recentSalesArray"
+                  v-bind:clickedRowCallback="clickedRowCallback"
+               />
+
+
+           </div>
+
+
+          </div> 
+       </div>
+
+
+
 
        <div class="w-column  mb-16 "  >
-          <div class="text-lg font-bold text-green-600"> Recent Sales Offers  </div>
+          <div class="text-lg font-bold text-green-600"> Recent Offers  </div>
           
            
           <div  class=" "  > 
@@ -122,7 +147,10 @@ export default {
       web3Plug: new Web3Plug() ,
 
       recentOffersArray: [],
-      recentBidsArray: []
+      recentBidsArray: [],
+
+
+      recentSalesArray: [] 
 
      
     }
@@ -141,6 +169,7 @@ export default {
    
 
       this.fetchRecentActivity()
+      this.fetchRecentSales()
    
   }, 
    beforeDestroy(){
@@ -148,7 +177,6 @@ export default {
   },
   methods: {
           
- 
 
           async fetchRecentActivity(){
 
@@ -156,13 +184,12 @@ export default {
 
             
             let filterCollections  = ['Cryptoadz','Cryptoflyz'] 
-
-            let inputRequest = {  "filterCollections": filterCollections  } 
+ 
  
             let results = await StarflaskAPIHelper.resolveStarflaskQuery( 
                FrontendConfig.tokenDataApiRoot+ '/api/v1/apikey',             
             {"requestType": "recent_activity",
-             "input":inputRequest }   )
+             "input":{  "filterCollections": filterCollections  }  }   )
 
             console.log('results',results )
  
@@ -193,6 +220,55 @@ export default {
                 }else{
                   this.recentBidsArray.push(row)
                 }
+                
+              
+            }
+
+          },
+
+
+// {"requestType":"recent_sales_history", "input":{"filterCollections":["Cryptoadz"]}}
+
+          async fetchRecentSales(){
+
+            this.recentSalesArray = []
+
+            
+            let filterCollections  = ['Cryptoadz','Cryptoflyz'] 
+
+            
+            let results = await StarflaskAPIHelper.resolveStarflaskQuery( 
+               FrontendConfig.tokenDataApiRoot+ '/api/v1/apikey',             
+            {"requestType": "recent_sales_history",
+             "input": {  "filterCollections": filterCollections  } }  )
+
+            console.log('results',results )
+ 
+
+            for(let result of results.output.recentSales){ 
+
+              let collectionName = AssetDataHelper.getCollectionNameForAsset( result.nftContractAddress )
+
+              let decimals = 18 
+              let currencyAmountFormatted = MathHelper.rawAmountToFormatted(result.currencyTokenAmount,decimals)
+                currencyAmountFormatted = MathHelper.formatFloat(currencyAmountFormatted)
+                currencyAmountFormatted = currencyAmountFormatted.toString().concat(' ♦')
+
+               let iconURL = AssetDataHelper.getImageURL(collectionName,result.nftTokenId) 
+
+                   
+
+                let row = { 
+                  icon: iconURL,
+                  collectionName: collectionName, 
+                  tokenId: result.nftTokenId , 
+                  currencyAmountFormatted:  (currencyAmountFormatted),
+                  createdAt: MathHelper.formatTimeAgo( (Date.now() - result.createdAt ) / 1000 )
+                }  
+
+                  this.recentSalesArray.push(row)
+
+           
                 
               
             }

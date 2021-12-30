@@ -433,7 +433,9 @@
             filterContractAddresses = filterContractAddresses.map(address => AppHelper.toChecksumAddress(address))
 
             let ONE_DAY =24*60*60*1000
-            let RECENT_TIME = Date.now() - ONE_DAY 
+            let ONE_MONTH = 30*24*60*60*1000
+
+            let RECENT_TIME = Date.now() - ONE_MONTH 
 
             let allOrders = await mongoInterface.marketOrdersModel
             .find({nftContractAddress: {$in: filterContractAddresses}, createdAt: {$gte: RECENT_TIME} })

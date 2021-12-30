@@ -24,31 +24,22 @@
          
 
 
-         <div class="  mt-8 py-8">
+         <div class="  py-8">
 
 
             <div class="w-row">
+             <img src="@/assets/images/SwampzHeader.png"   class="inline-block select-none"  /> 
+
+            </div>
+
+
+            <div class="w-row mt-16">
               <ToadzTileGrid 
               
               />
             </div>
 
-          <div class="w-row text-center"> 
- 
-            
-               <router-link to="/collection/cryptoadz" class='text-gray-200 text-xl inline text-align:center' style="margin:0 auto;"> Shop All Toadz </router-link>
-                
-            
-           </div>
-
-            <div class="w-row text-center mt-16"> 
-
- 
-              <router-link to="/collection/cryptoflyz" class='text-gray-200 text-xl inline text-align:center ' style="margin:0 auto;"> Shop Cryptoflyz </router-link>
-               
-            
-           </div>
-
+        
  
 
          </div>
@@ -58,14 +49,35 @@
 
               <div class="py-32 " style="width:50%; margin: 0 auto;"> 
               
-                  <img src="@/assets/images/swampz.png" width="300"  /> 
+                 
               
                   <FrontPageMedia />
 
                    <div> 
-                    <div>
-                    <router-link to="/activity" class='text-orange-600 text-xl block'> View Recent Activity</router-link>
+ 
+
+                      <div class="w-row text-center my-8"> 
+                        <router-link to="/activity" class='text-orange-600 text-xl block'> View Recent Activity</router-link>
                     </div>
+
+
+                      <div class="w-row text-center my-8"> 
+ 
+            
+                      <router-link to="/collection/cryptoadz" class='text-gray-200 text-xl inline text-align:center' style="margin:0 auto;"> Shop Toadz </router-link>
+                        
+                    
+                  </div>
+
+                    <div class="w-row text-center my-8"> 
+
+        
+                      <router-link to="/collection/cryptoflyz" class='text-gray-200 text-xl inline text-align:center ' style="margin:0 auto;"> Shop Flyz </router-link>
+                      
+                    
+                  </div>
+
+
                   </div> 
 
               </div>

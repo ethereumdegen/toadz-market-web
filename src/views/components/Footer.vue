@@ -1,5 +1,15 @@
 <template>
   <div class="section footer my-4 font-boring ">
+
+
+    <div class="container margin-center">
+           
+         
+            <img src="@/assets/images/swampz.png" width="100"  /> 
+        </div>
+
+        
+
     <div class="container margin-center">
 
       <div class=" grid grid-flow-col ">

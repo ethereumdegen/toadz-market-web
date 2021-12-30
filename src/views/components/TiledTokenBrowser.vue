@@ -1,7 +1,18 @@
 <template>
   <div  >
 
-    <div v-if="currentFilter && currentFilter.traitName" class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-black"> {{currentFilter.traitName}}: {{currentFilter.traitValue}}  </div>
+    <div v-if="currentFilter && currentFilter.traitName" @click="clearFilters" class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-red-500 cursor-pointer"> 
+      X  
+    </div>
+
+    <div v-if="currentFilter && currentFilter.traitName" class="bg-gray-100 mb-2 p-2 rounded border-gray-800 border-2 inline-block  text-black"> 
+      {{currentFilter.traitName}}: {{currentFilter.traitValue}} 
+      
+    </div>
+         
+         
+         
+         
           <div class="" style="min-height:400px">
               <NftTile
                 v-for="tokenData in activeNFTDataArray"
@@ -44,7 +55,7 @@ const FrontendConfig = require('../../config/FrontendConfig.json')[envName]
 
 export default {
   name: 'TiledTokenBrowser',
-  props: [ 'collectionName', 'currentFilter', 'updatedCurrentPageCallback' ],
+  props: [ 'collectionName', 'currentFilter', 'updatedCurrentPageCallback' , 'clearFiltersCallback'],
   components: {NftTile,PaginationBar},
   watch: {
     currentFilter: {
@@ -126,15 +137,19 @@ export default {
         
       },
 
+
+
       forceSetPage( newPage ){
         this.currentPage = newPage  
       },
 
-      filterTokensForCurrentPage(allTokenData){
-       
+      filterTokensForCurrentPage(allTokenData){   
 
-         return allTokenData.slice(0,this.itemsPerPage)
-        
+         return allTokenData.slice(0,this.itemsPerPage) 
+      },
+
+      clearFilters(){
+        this.clearFiltersCallback()
       },
 
       async setCurrentPageCallback(newPage){

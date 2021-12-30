@@ -36,6 +36,7 @@
                   v-bind:collectionName="collectionName"
                   v-bind:currentFilter="tokenBrowserFilter"
                   v-bind:updatedCurrentPageCallback="updatedCurrentPageCallback"
+                  v-bind:clearFiltersCallback="clearFiltersCallback"
 
                 /> 
             
@@ -197,8 +198,7 @@ export default {
             //set page to 1 
             this.currentPage = 1
 
-             this.$refs.TokenBrowser.forceSetPage( this.currentPage ) 
-             
+             this.$refs.TokenBrowser.forceSetPage( this.currentPage )  
 
             this.tokenBrowserFilter = { traitName: result.parent , traitValue: result.leaf } 
            
@@ -219,6 +219,16 @@ export default {
               this.selectedTab = tabname.toLowerCase() 
 
           },
+
+          clearFiltersCallback(){
+             this.currentPage = 1
+
+             this.$refs.TokenBrowser.forceSetPage( this.currentPage )  
+
+            this.tokenBrowserFilter = { traitName: undefined , traitValue: undefined } 
+           
+            this.updateRouteParams()
+          }, 
 
           updatedCurrentPageCallback(currentPage){
              this.currentPage = currentPage  

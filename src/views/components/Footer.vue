@@ -35,7 +35,7 @@
 
             <a href="https://discord.gg/mUPRJbpMsG" target="_blank" class="footer-link">OnSecondary Discord</a>
 
-            <a href="https://baycmarket.io" target="_blank" class="footer-link">BAYC Market</a>
+            <a href="https://onsecondary.com" target="_blank" class="footer-link">Powered by OnSecondary</a>
 
           
 

@@ -35,7 +35,8 @@
 
             <a href="https://discord.gg/mUPRJbpMsG" target="_blank" class="footer-link">Swampz Discord</a>
 
-           
+            <a href="https://baycmarket.io" target="_blank" class="footer-link">BAYC Market</a>
+
           
 
          </div>
